@@ -1,0 +1,1022 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<style>:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0;font-size:14px}img{max-width:100%}[hidden]{display:none!important}</style>
+<title>Biblical Dining</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="theme-color" content="#2F4B6E">
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+/* Colours: Galilee blue (main), sea mist (background), wheat gold (accent). Food icons keep their natural colours. Layout: sidebar of traditions + nav on wide screens; slide-in drawer and bottom tab bar on phones. Olive (main), limestone (background), pomegranate (accent). */
+:root{
+  --main:#2F4B6E; --bg:#E8EFF3; --accent:#A9650A;
+  --ink:#14202B; --muted:#5A6B7A; --surface:#F8FBFC; --line:#CBD8E1; --main-soft:#D5E1EB; --accent-soft:#F7E6C2;
+  --display:"Young Serif",Georgia,"Times New Roman",serif;
+  --body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r:14px;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --main:#8FB4DD; --bg:#0E151D; --accent:#F0B54A;
+  --ink:#E6EEF5; --muted:#93A5B6; --surface:#16202B; --line:#263545; --main-soft:#1E2D3E; --accent-soft:#3A2E14; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --main:#8FB4DD; --bg:#0E151D; --accent:#F0B54A;
+  --ink:#E6EEF5; --muted:#93A5B6; --surface:#16202B; --line:#263545; --main-soft:#1E2D3E; --accent-soft:#3A2E14; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:40;background:var(--bg)}
+button{font:inherit;color:inherit;cursor:pointer}
+ul{list-style:none;margin:0;padding:0}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+h1,h2,h3{margin:0}
+h2{font-family:var(--display);font-weight:400;font-size:1.35rem;text-wrap:balance}
+.eyebrow{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.note{font-size:.78rem;color:var(--muted)}
+
+/* icons */
+.ic{width:100%;height:100%;display:block;overflow:visible}
+.ic{--c1:var(--main);--c2:var(--accent)}
+.ic .m{fill:var(--c1)} .ic .a{fill:var(--c2)} .ic .l{fill:#FFF7E3}
+.ic .sm,.ic .sa,.ic .sl{fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ic .sm{stroke:var(--c1)} .ic .sa{stroke:var(--c2)} .ic .sl{stroke:#FFF7E3}
+.ic .ol{fill:#FFF7E3;stroke:var(--c1);stroke-width:1.8;stroke-linejoin:round}
+.ui{display:block;flex:none}
+.tile{width:46px;height:46px;flex:none;border-radius:14px;background:#F5EFDD;padding:7px;transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.tile.sm{width:30px;height:30px;border-radius:10px;padding:4px}
+.tile.lg{width:76px;height:76px;border-radius:22px;padding:11px}
+.food:hover .tile,.trbtn:hover .tile{transform:rotate(-6deg) scale(1.08)}
+
+/* shell */
+.app{display:block}
+.main{min-width:0}
+.col{max-width:760px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:8px 110px}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);display:flex;align-items:center;gap:12px;padding:12px max(16px,env(safe-area-inset-right,0px)) 10px max(16px,env(safe-area-inset-left,0px))}
+.brand{display:flex;align-items:center;gap:11px;min-width:0}
+.brand svg{flex:none}
+.brand b{font-family:var(--display);font-weight:400;font-size:1.45rem;line-height:1.05;color:var(--main);display:block}
+.brand span{font-size:.78rem;color:var(--muted);display:block}
+.ibtn{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--surface);display:grid;place-items:center;color:var(--main);transition:transform .15s,background .2s;flex:none}
+.ibtn:active{transform:scale(.9)}
+.ibtn:hover{background:var(--main-soft)}
+
+/* sidebar */
+aside{position:fixed;left:0;top:0;bottom:0;width:min(86vw,320px);z-index:30;background:var(--surface);border-right:1px solid var(--line);overflow-y:auto;transform:translateX(-105%);transition:transform .4s cubic-bezier(.2,.9,.25,1);padding:calc(18px + env(safe-area-inset-top,0px)) 14px calc(24px + env(safe-area-inset-bottom,0px)) max(14px,env(safe-area-inset-left,0px));display:flex;flex-direction:column;gap:14px}
+aside.on{transform:none}
+.snav{display:none;flex-direction:column;gap:4px}
+.snav button{display:flex;align-items:center;gap:12px;border:0;background:none;border-radius:12px;padding:10px 12px;font-weight:600;color:var(--muted);text-align:left;transition:background .2s,color .2s}
+.snav button:hover{background:var(--main-soft)}
+.snav button[aria-selected="true"]{background:var(--main-soft);color:var(--main)}
+.shead{font-size:.7rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:0 6px}
+.trs{display:flex;flex-direction:column;gap:3px}
+.trbtn{width:100%;display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;border:0;background:none;border-radius:14px;padding:6px 10px 6px 6px;text-align:left;transition:background .2s}
+.trbtn:hover{background:var(--main-soft)}
+.trbtn[aria-pressed="true"]{background:var(--main);color:var(--bg)}
+.trbtn b{font-weight:600;display:block;line-height:1.2}
+.trbtn small{font-size:.72rem;opacity:.75}
+.trn{font-family:var(--display);font-size:1.05rem;font-variant-numeric:tabular-nums}
+.scrim{position:fixed;inset:0;background:rgba(10,12,6,.45);z-index:25;opacity:0;pointer-events:none;transition:opacity .3s}
+.scrim.on{opacity:1;pointer-events:auto}
+.sheetscrim{z-index:50}
+
+@media (min-width:900px){
+  .app{display:grid;grid-template-columns:290px minmax(0,1fr);max-width:1180px;margin:0 auto}
+  aside{position:sticky;top:env(safe-area-inset-top,0px);height:100vh;transform:none;width:auto;z-index:1;border-right:1px solid var(--line);padding-top:22px}
+  .snav{display:flex}
+  .top{display:none}
+  .tabs{display:none!important}
+  .col{padding-block:26px 60px}
+  #scrim{display:none}
+}
+
+/* views */
+.view{display:none;flex-direction:column;gap:16px;animation:rise .45s cubic-bezier(.2,.8,.2,1)}
+.view.on{display:flex}
+@keyframes rise{from{transform:translateY(14px);opacity:.2}to{transform:none;opacity:1}}
+
+/* tab bar */
+nav.tabs{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);padding:8px max(10px,env(safe-area-inset-right,0px)) calc(8px + env(safe-area-inset-bottom,0px)) max(10px,env(safe-area-inset-left,0px))}
+.tabs-in{max-width:720px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:4px;position:relative}
+.tab{background:none;border:0;padding:8px 2px 6px;display:flex;flex-direction:column;align-items:center;gap:3px;font-size:.72rem;font-weight:600;color:var(--muted);border-radius:12px;position:relative;z-index:1;transition:color .25s}
+.tab .ui{transition:transform .35s cubic-bezier(.3,1.6,.5,1)}
+.tab[aria-selected="true"]{color:var(--main)}
+.tab[aria-selected="true"] .ui{transform:translateY(-2px) scale(1.12)}
+.pill{position:absolute;top:0;bottom:0;width:25%;background:var(--main-soft);border-radius:12px;transition:transform .4s cubic-bezier(.3,1.3,.5,1)}
+
+/* controls */
+.search{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:10px 14px;color:var(--muted)}
+.search input{border:0;background:none;outline:0;flex:1;min-width:0;font:inherit;color:var(--ink)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 13px;font-size:.82rem;font-weight:600;transition:background .2s,color .2s,transform .15s}
+.chip:hover{border-color:var(--main)}
+.chip:active{transform:scale(.95)}
+.chip[aria-pressed="true"]{background:var(--main);border-color:var(--main);color:var(--bg)}
+.chip .tile{width:20px;height:20px;padding:2px;border-radius:7px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:3px}
+.seg button{border:0;background:none;border-radius:999px;padding:5px 12px;font-size:.8rem;font-weight:600;color:var(--muted);transition:all .2s}
+.seg button[aria-pressed="true"]{background:var(--main);color:var(--bg)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:12px 18px;font-weight:700;background:var(--main);color:var(--bg);position:relative;overflow:hidden;transition:transform .15s}
+.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,rgba(255,255,255,.28) 50%,transparent 70%);transform:translateX(-120%);transition:transform .6s}
+.btn:hover::after{transform:translateX(120%)}
+.btn:active{transform:scale(.96)}
+.btn.alt{background:var(--accent-soft);color:var(--accent)}
+.btn.saved .ui{fill:currentColor;animation:pop .45s cubic-bezier(.3,1.8,.5,1)}
+@keyframes pop{0%{transform:scale(.5)}60%{transform:scale(1.35)}100%{transform:scale(1)}}
+
+/* hero */
+.hero{background:var(--main);color:var(--bg);border-radius:var(--r);padding:18px;display:grid;grid-template-columns:auto 1fr auto;gap:6px 14px;align-items:center;overflow:hidden;position:relative}
+.hero::before{content:"";position:absolute;right:-30px;top:-30px;width:150px;height:150px;border-radius:50%;background:var(--bg);opacity:.08}
+.hero .eyebrow{color:var(--bg);opacity:.8}
+.hero h2{color:var(--bg);font-size:1.25rem}
+.hero .big{font-family:var(--display);font-size:2.6rem;line-height:.9;font-variant-numeric:tabular-nums}
+.hero p{margin:0;font-size:.85rem;opacity:.88;grid-column:1/-1}
+.hero .tx{min-width:0}
+
+/* food list */
+.foods{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:8px}
+.food{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:9px 12px 9px 9px;text-align:left;width:100%;transition:transform .15s,border-color .2s;animation:rise .4s both}
+.food:hover{border-color:var(--main)}
+.food:active{transform:scale(.985)}
+.fname{font-weight:600;min-width:0;display:block;overflow-wrap:anywhere}
+.fcat{font-size:.75rem;color:var(--muted);display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.mini{display:inline-flex;gap:4px}
+.mini .tile{width:24px;height:24px;padding:3px;border-radius:8px}
+.bar{display:block;height:5px;border-radius:3px;background:var(--line);margin-top:6px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--main);border-radius:3px;transform-origin:left;animation:grow .9s cubic-bezier(.2,.8,.2,1) both}
+@keyframes grow{from{transform:scaleX(0)}}
+.count{font-family:var(--display);font-size:1.3rem;color:var(--accent);font-variant-numeric:tabular-nums;text-align:right;line-height:1}
+.count small{display:block;font-family:var(--body);font-size:.62rem;color:var(--muted);letter-spacing:.06em;text-transform:uppercase;margin-top:2px}
+.nb{font-size:.68rem;font-weight:700;color:var(--muted);text-align:right;letter-spacing:.04em;text-transform:uppercase;max-width:70px;line-height:1.2}
+.fav{color:var(--accent)}
+.empty{grid-column:1/-1;text-align:center;color:var(--muted);padding:30px 0}
+
+/* cards */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:12px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:flex;flex-direction:column;gap:8px;text-align:left;min-width:0;animation:rise .45s both;transition:transform .2s,border-color .2s}
+button.card:hover{border-color:var(--main);transform:translateY(-2px)}
+.card h3{font-family:var(--display);font-weight:400;font-size:1.12rem;text-wrap:balance}
+.card p{margin:0;font-size:.88rem;color:var(--muted)}
+.ref{display:inline-block;font-size:.72rem;font-weight:700;color:var(--accent);background:var(--accent-soft);border-radius:6px;padding:2px 7px;align-self:flex-start}
+.tags{display:flex;gap:6px;flex-wrap:wrap}
+.tag{font-size:.72rem;background:var(--main-soft);color:var(--main);border-radius:6px;padding:2px 7px;font-weight:600}
+
+/* plan */
+.days{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px}
+.days::-webkit-scrollbar{display:none}
+.day{flex:none;width:52px;border:1px solid var(--line);background:var(--surface);border-radius:12px;padding:8px 0;display:flex;flex-direction:column;align-items:center;font-size:.7rem;font-weight:600;color:var(--muted);transition:all .25s}
+.day b{font-family:var(--display);font-weight:400;font-size:1.2rem;color:var(--ink)}
+.day[aria-pressed="true"]{background:var(--main);border-color:var(--main);color:var(--bg)}
+.day[aria-pressed="true"] b{color:var(--bg)}
+.meal{display:grid;grid-template-columns:76px 1fr;gap:12px;align-items:start;padding:14px 0;border-top:1px solid var(--line);animation:rise .4s both}
+.meal:first-child{border-top:0}
+.slot{font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);padding-top:3px}
+.meal h4{margin:0 0 2px;font-size:1rem}
+.meal p{margin:0;font-size:.86rem;color:var(--muted)}
+.verse{background:var(--main-soft);border-radius:var(--r);padding:14px 16px;font-family:var(--display);color:var(--main);font-size:1rem}
+.verse span{display:block;font-family:var(--body);font-size:.75rem;font-weight:700;margin-top:4px;color:var(--accent)}
+
+/* sheet */
+.sheet{position:fixed;left:0;right:0;bottom:0;z-index:51;background:var(--surface);border-radius:20px 20px 0 0;max-height:88%;overflow-y:auto;transform:translateY(105%);transition:transform .42s cubic-bezier(.2,.9,.25,1);padding:10px max(18px,env(safe-area-inset-right,0px)) calc(28px + env(safe-area-inset-bottom,0px)) max(18px,env(safe-area-inset-left,0px))}
+.sheet.on{transform:none}
+.sheet-in{max-width:640px;margin:0 auto;display:flex;flex-direction:column;gap:14px;position:relative}
+.grab{width:42px;height:5px;border-radius:3px;background:var(--line);margin:0 auto 4px}
+.sheet h2{font-size:1.6rem;color:var(--main)}
+.shead2{display:flex;gap:14px;align-items:center}
+.sheet ul,.sheet ol{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:5px;list-style:revert}
+.sheet h3{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--accent)}
+.stat{display:flex;align-items:baseline;gap:10px}
+.stat .count{font-size:2.6rem}
+.tsec{border-top:1px solid var(--line);padding-top:12px;display:flex;flex-direction:column;gap:8px}
+.tsec .th{display:flex;align-items:center;gap:10px;font-weight:700;color:var(--main)}
+.tsec p{margin:0}
+.close{position:absolute;right:0;top:0}
+
+/* splash: wheat bundle swirls into a loaf (3s) */
+#splash{position:fixed;inset:0;z-index:100;background:#2F4B6E;display:grid;place-items:center;transition:opacity .4s}
+#splash.out{opacity:0;pointer-events:none}
+#splash .stage{position:relative;width:230px;height:230px;display:grid;place-items:center}
+#splash .stage>*{grid-area:1/1}
+#splash .wheat,#splash .loaf{width:190px;height:190px;position:relative}
+#splash .wheat{animation:wheatSwirl 1.9s cubic-bezier(.6,0,.4,1) both}
+@keyframes wheatSwirl{0%{transform:scale(.4) rotate(-40deg);opacity:0}22%{transform:scale(1) rotate(0);opacity:1}38%{transform:scale(1) rotate(0);opacity:1}100%{transform:scale(.12) rotate(600deg);opacity:0}}
+#splash .loaf{animation:loafIn 1.1s cubic-bezier(.2,1.1,.4,1) 1.55s both}
+@keyframes loafIn{0%{transform:scale(.1) rotate(-220deg);opacity:0}60%{opacity:1}100%{transform:scale(1) rotate(0);opacity:1}}
+#splash .g{position:absolute;left:50%;top:50%;width:11px;height:20px;margin:-10px 0 0 -5px;border-radius:50%;background:#F2C14E;opacity:0;animation:orbit 1.45s cubic-bezier(.55,0,.45,1) both;animation-delay:calc(.6s + var(--d))}
+@keyframes orbit{0%{transform:rotate(var(--a)) translateY(-95px) scale(1);opacity:0}20%{opacity:1}100%{transform:rotate(calc(var(--a) + 540deg)) translateY(-4px) scale(.3);opacity:0}}
+#splash .steam{position:absolute;left:50%;top:50%;width:6px;height:26px;margin:-70px 0 0 -3px;border-radius:6px;background:rgba(255,255,255,.55);opacity:0;animation:steam 1s ease-out 2.45s both}
+@keyframes steam{0%{transform:translateY(14px) scaleY(.4);opacity:0}40%{opacity:.8}100%{transform:translateY(-14px) scaleY(1);opacity:0}}
+#splash .name{position:absolute;bottom:18%;left:0;right:0;text-align:center;font-family:var(--display);font-size:1.9rem;color:#F5EFDD;animation:nameIn .8s ease-out 1.9s both}
+@keyframes nameIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){#splash{display:none}*,*::before,*::after{animation:none!important;transition:none!important}}
+
+/* ===== v2: mobile-first polish, swipe, expand, lists, luxury motion ===== */
+html{-webkit-tap-highlight-color:transparent}
+.top{background:color-mix(in srgb,var(--bg) 82%,transparent);-webkit-backdrop-filter:blur(14px);backdrop-filter:blur(14px)}
+.search input{font-size:16px}
+.tabs-in{gap:0}
+.tabs-in{grid-template-columns:repeat(5,1fr)}
+.pill{width:20%}
+.tab{font-size:.68rem;position:relative}
+.badge{position:absolute;top:2px;right:calc(50% - 20px);min-width:17px;height:17px;border-radius:9px;background:var(--accent);color:var(--bg);font-size:.65rem;font-weight:800;display:grid;place-items:center;padding:0 4px;transform:scale(0);transition:transform .35s cubic-bezier(.3,1.8,.5,1)}
+.badge.on{transform:scale(1)}
+.snav .badge{position:static;margin-left:auto;transform:scale(1);display:none}
+.snav .badge.on{display:grid}
+
+/* food cards: swipe + expand */
+.foods{gap:10px}
+.fitem{background:var(--surface);border:1px solid var(--line);border-radius:16px;overflow:hidden;animation:rise .5s cubic-bezier(.2,.8,.2,1) both;transition:border-color .25s,box-shadow .35s}
+.fitem.open{border-color:var(--main);box-shadow:0 10px 30px -14px color-mix(in srgb,var(--main) 55%,transparent)}
+.swipe{position:relative;background:var(--surface)}
+.act{position:absolute;inset:0;display:flex;align-items:center;padding:0 20px;font-weight:700;font-size:.9rem;gap:10px;opacity:0;color:var(--bg)}
+.act .ui{transform:scale(calc(.6 + var(--p,0)*.6))}
+.act.r{background:var(--accent);justify-content:flex-start}
+.act.l{background:var(--main);justify-content:flex-end}
+.fitem.r .act.r,.fitem.l .act.l{opacity:1}
+.fitem.ready .act .ui{animation:pop .4s cubic-bezier(.3,1.8,.5,1)}
+.food{border:0;border-radius:0;background:var(--surface);position:relative;touch-action:pan-y;user-select:none;-webkit-user-select:none;padding:10px 12px 10px 10px;will-change:transform}
+.food .chev{color:var(--muted);transition:transform .4s cubic-bezier(.3,1.4,.5,1)}
+.fitem.open .chev{transform:rotate(180deg)}
+.inl{display:inline-flex;vertical-align:-2px;color:var(--accent);margin-left:6px;animation:pop .45s cubic-bezier(.3,1.8,.5,1)}
+.side{display:flex;flex-direction:column;align-items:flex-end;gap:4px}
+.fx{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s cubic-bezier(.2,.8,.2,1)}
+.fitem.open .fx{grid-template-rows:1fr}
+.fxin{min-height:0;overflow:hidden;padding:0 14px;display:flex;flex-direction:column;gap:14px}
+.fitem.open .fxin{padding:4px 14px 16px}
+.fitem.open .fxin>*{animation:rise .5s cubic-bezier(.2,.8,.2,1) both}
+.fitem.open .fxin>*:nth-child(2){animation-delay:.06s}.fitem.open .fxin>*:nth-child(3){animation-delay:.12s}
+.fitem.open .fxin>*:nth-child(4){animation-delay:.18s}.fitem.open .fxin>*:nth-child(5){animation-delay:.24s}
+.fitem.open .fxin>*:nth-child(6){animation-delay:.3s}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.stats div{background:var(--main-soft);border-radius:12px;padding:10px 6px;text-align:center}
+.stats b{display:block;font-family:var(--display);font-weight:400;font-size:1.35rem;color:var(--main);line-height:1.1;font-variant-numeric:tabular-nums}
+.stats span{font-size:.65rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.fxh{font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);margin:0 0 6px}
+.tip{background:var(--accent-soft);border-radius:12px;padding:10px 12px;font-size:.88rem}
+.tip small{display:block;color:var(--muted);margin-top:4px;font-size:.7rem}
+.btns{display:flex;gap:8px;flex-wrap:wrap}
+.btn.sm{padding:9px 14px;font-size:.85rem}
+.btn.ghost{background:var(--main-soft);color:var(--main)}
+.btn.ghost::after{display:none}
+.plan-hit{font-size:.84rem;color:var(--muted)}
+.plan-hit b{color:var(--ink);font-weight:600}
+
+/* swipe hint */
+.hint{display:flex;align-items:center;gap:10px;font-size:.8rem;color:var(--muted);background:var(--surface);border:1px dashed var(--line);border-radius:14px;padding:9px 12px}
+.hint .ui{color:var(--accent);animation:nudge 1.8s ease-in-out infinite}
+@keyframes nudge{0%,100%{transform:translateX(0)}50%{transform:translateX(8px)}}
+
+/* toast */
+#toast{position:fixed;left:50%;bottom:calc(86px + env(safe-area-inset-bottom,0px));z-index:60;transform:translate(-50%,30px);opacity:0;pointer-events:none;background:var(--ink);color:var(--bg);border-radius:999px;padding:10px 10px 10px 18px;display:flex;align-items:center;gap:12px;font-size:.88rem;font-weight:600;max-width:calc(100vw - 32px);transition:transform .45s cubic-bezier(.2,1.3,.4,1),opacity .3s;box-shadow:0 14px 30px -10px rgba(0,0,0,.45)}
+#toast.on{transform:translate(-50%,0);opacity:1;pointer-events:auto}
+#toast button{border:0;background:color-mix(in srgb,var(--bg) 22%,transparent);color:var(--bg);border-radius:999px;padding:6px 12px;font-weight:700;font-size:.8rem}
+@media (min-width:900px){#toast{bottom:28px}}
+.fly{position:fixed;z-index:70;pointer-events:none;width:46px;height:46px;border-radius:14px;background:#F5EFDD;padding:7px;box-shadow:0 10px 24px -6px rgba(0,0,0,.4)}
+
+/* lists view */
+.lchips{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;padding:2px}
+.lchips::-webkit-scrollbar{display:none}
+.lchip{flex:none;display:flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:8px 14px;font-weight:600;font-size:.88rem;transition:all .25s}
+.lchip i{font-style:normal;font-size:.72rem;background:var(--main-soft);color:var(--main);border-radius:999px;padding:1px 7px;font-weight:800}
+.lchip[aria-pressed="true"]{background:var(--main);border-color:var(--main);color:var(--bg)}
+.lchip[aria-pressed="true"] i{background:var(--bg);color:var(--main)}
+.litems{display:flex;flex-direction:column;gap:8px}
+.litem{display:grid;grid-template-columns:auto 1fr auto;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:8px 8px 8px 8px;animation:rise .45s cubic-bezier(.2,.8,.2,1) both}
+.litem b{font-weight:600;display:block}
+.litem small{color:var(--muted);font-size:.75rem}
+.ibtn.sm{width:36px;height:36px}
+.lempty{text-align:center;color:var(--muted);padding:34px 10px;border:1px dashed var(--line);border-radius:16px;display:flex;flex-direction:column;align-items:center;gap:10px}
+.lform{display:flex;gap:8px}
+.lform input{flex:1;min-width:0;font:inherit;font-size:16px;border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:10px 16px;outline:0}
+.lform input:focus{border-color:var(--main)}
+.pick{display:flex;flex-direction:column;gap:8px}
+.pickrow{display:flex;align-items:center;gap:12px;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:12px 14px;font-weight:600;text-align:left;width:100%;transition:all .25s}
+.pickrow .box{margin-left:auto;width:24px;height:24px;border-radius:8px;border:2px solid var(--line);display:grid;place-items:center;color:transparent;transition:all .3s cubic-bezier(.3,1.8,.5,1)}
+.pickrow[aria-pressed="true"]{border-color:var(--main);background:var(--main-soft)}
+.pickrow[aria-pressed="true"] .box{background:var(--main);border-color:var(--main);color:var(--bg);transform:scale(1.1)}
+textarea.share{width:100%;min-height:110px;font:inherit;font-size:14px;border:1px solid var(--line);border-radius:12px;padding:10px;background:var(--surface);color:var(--ink)}
+
+/* luxury motion */
+.hero{background:linear-gradient(135deg,var(--main),color-mix(in srgb,var(--main) 72%,#000))}
+.hero::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.16) 50%,transparent 65%);transform:translateX(-120%);animation:sheen 9s ease-in-out 1.5s infinite;pointer-events:none}
+@keyframes sheen{0%,70%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+.dust{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.dust i{position:absolute;bottom:-14px;width:7px;height:12px;border-radius:50%;background:#F2C14E;opacity:0;animation:drift var(--t,9s) linear var(--dl,0s) infinite}
+@keyframes drift{0%{transform:translateY(0) rotate(0);opacity:0}12%{opacity:.7}80%{opacity:.5}100%{transform:translateY(-190px) translateX(var(--dx,20px)) rotate(240deg);opacity:0}}
+.twirl{animation:twirl 1s cubic-bezier(.3,1.4,.4,1)}
+@keyframes twirl{0%{transform:rotate(0) scale(1);box-shadow:0 0 0 0 color-mix(in srgb,var(--accent) 60%,transparent)}45%{transform:rotate(200deg) scale(1.22);box-shadow:0 0 0 9px color-mix(in srgb,var(--accent) 0%,transparent)}100%{transform:rotate(360deg) scale(1)}}
+.star{position:absolute;width:14px;height:14px;pointer-events:none;background:#F5EFDD;clip-path:polygon(50% 0,60% 40%,100% 50%,60% 60%,50% 100%,40% 60%,0 50%,40% 40%);animation:twinkle 1.4s ease-out both}
+@keyframes twinkle{0%{transform:scale(0) rotate(0);opacity:0}40%{transform:scale(1.2) rotate(45deg);opacity:1}100%{transform:scale(0) rotate(90deg);opacity:0}}
+.tab:active .ui{transform:scale(.8)}
+.view.on{animation:rise .5s cubic-bezier(.2,.8,.2,1)}
+
+/* phone layout */
+@media (max-width:600px){
+  .col{padding-left:max(14px,env(safe-area-inset-left,0px));padding-right:max(14px,env(safe-area-inset-right,0px));padding-block:4px 120px}
+  .view{gap:14px}
+  .hero{padding:14px;gap:4px 12px;border-radius:18px}
+  .hero .tile.lg{width:58px;height:58px;border-radius:18px;padding:9px}
+  .hero h2{font-size:1.15rem}
+  .hero .big{font-size:2.1rem}
+  .hero p{font-size:.78rem}
+  .chip .tile{display:none}
+  .chip{padding:7px 14px}
+  .food{padding:10px 10px 10px 8px;gap:10px}
+  .tile{width:44px;height:44px;border-radius:13px}
+  .mini .tile{width:20px;height:20px;padding:2px}
+  .count{font-size:1.15rem}
+  .count small{font-size:.58rem}
+  .cards{grid-template-columns:1fr}
+  .sheet{max-height:92%}
+}
+.fitem:not(.has) .inl{display:none}
+.food{animation:none;transition:none}
+</style>
+
+</head>
+<body>
+<div id="splash" aria-hidden="true"><div class="stage"><div class="wheat" id="wheatSlot"></div><div class="loaf"><svg viewBox="0 0 64 64"><ellipse cx="32" cy="53" rx="23" ry="4" fill="rgba(0,0,0,.2)"/><path fill="#D4973F" d="M8 34c0-11 10-18 24-18s24 7 24 18v12c0 3-2 5-5 5H13c-3 0-5-2-5-5z"/><path fill="#E8B25E" d="M12 32c1-8 9-13 20-13s19 5 20 13c-6-4-14-5-20-5s-14 1-20 5z"/><path fill="none" stroke="#A9692B" stroke-width="2.6" stroke-linecap="round" d="M20 28l5 10M30 26l5 11M40 28l5 9"/></svg></div><i class="steam" style="margin-left:-18px"></i><i class="steam" style="animation-delay:2.6s"></i><i class="steam" style="margin-left:12px;animation-delay:2.75s"></i><span id="grains"></span></div><div class="name">Biblical Dining</div></div>
+<div class="app">
+  <aside id="side" aria-label="Traditions and sections">
+    <div class="brand"><span class="logoslot" data-s="42"></span><div><b>Biblical Dining</b><span id="subline"></span></div></div>
+    <div class="snav" id="snav"></div>
+    <h3 class="shead">Traditions</h3>
+    <ul class="trs" id="trs"></ul>
+    <p class="note" style="padding:0 6px">Pick a tradition to see the foods it names or holds sacred. Only the Bible entries carry mention counts.</p>
+  </aside>
+  <div class="main">
+    <header class="top">
+      <button class="ibtn" id="menu" aria-label="Open traditions"></button>
+      <div class="brand"><span class="logoslot" data-s="34"></span><div><b>Biblical Dining</b></div></div>
+    </header>
+    <div class="col">
+      <section class="view on" id="v-foods" role="tabpanel" aria-label="Foods">
+        <div id="hero"></div>
+        <label class="search"><span id="searchIc"></span><input id="q" type="search" placeholder="Search figs, mango, honey, lotus…" aria-label="Search foods"></label>
+        <div class="chips" id="cats"></div>
+        <div class="row"><span class="note" id="shown"></span>
+          <div class="seg" role="group" aria-label="Sort"><button id="sCount" aria-pressed="true">Most mentioned</button><button id="sAz" aria-pressed="false">A–Z</button></div></div>
+        <ul class="foods" id="list"></ul>
+        <p class="note">Bible counts are approximate King James Version word counts, including plural and tree forms (for example fig, figs, fig tree). Counts for livestock and water are rough. Other translations differ, so check a concordance before quoting a number.</p>
+      </section>
+            <section class="view" id="v-lists" role="tabpanel" aria-label="My lists">
+        <div class="row"><div><div class="eyebrow">My lists</div><h2 id="listTitle">Favourites</h2></div><button class="btn sm" id="newList"></button></div>
+        <div class="lchips" id="lchips"></div>
+        <div id="lform" hidden></div>
+        <div class="litems" id="litems"></div>
+        <div class="btns" id="lbtns"></div>
+        <div id="lshare"></div>
+      </section>
+      <section class="view" id="v-plan" role="tabpanel" aria-label="Diet plan">
+        <div class="row"><div><div class="eyebrow">7-day plan</div><h2 id="planTitle">Land of Plenty</h2></div>
+          <div class="seg" role="group" aria-label="Plan type"><button id="pEvery" aria-pressed="true">Everyday</button><button id="pDaniel" aria-pressed="false">Daniel Fast</button></div></div>
+        <p class="note" id="planBlurb"></p>
+        <div class="days" id="days"></div>
+        <div class="card" style="animation:none"><div id="meals"></div></div>
+        <div class="verse" id="planVerse"></div>
+      </section>
+      <section class="view" id="v-meals" role="tabpanel" aria-label="Meals">
+        <div><div class="eyebrow">Meal ideas</div><h2>Dishes drawn from the Scriptures</h2></div>
+        <div class="cards" id="mealCards"></div>
+      </section>
+      <section class="view" id="v-tonics" role="tabpanel" aria-label="Tonics">
+        <div><div class="eyebrow">Tonics &amp; drinks</div><h2>Simple drinks from biblical ingredients</h2></div>
+        <div class="cards" id="tonicCards"></div>
+        <p class="note">These are traditional food recipes, not medicine. Raw honey is not suitable for babies under 12 months. Speak to a doctor before fasting or making big diet changes, especially if you are pregnant, diabetic or on medication.</p>
+      </section>
+    </div>
+  </div>
+</div>
+
+<nav class="tabs" role="tablist" aria-label="Sections"><div class="tabs-in" id="tabsIn"><span class="pill" id="pill"></span></div></nav>
+<div id="toast" role="status" aria-live="polite"><span id="toastMsg"></span><button id="toastAct" hidden></button></div>
+<div class="scrim" id="scrim"></div>
+<div class="scrim sheetscrim" id="sscrim"></div>
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-label="Details"><div class="sheet-in"><button class="ibtn close" id="close" aria-label="Close"></button><div id="sheetBody" style="display:flex;flex-direction:column;gap:14px"></div></div></div>
+
+<script>
+const IC={
+book:'<path class="m" d="M4 7c4-2 8-2 12 1v18c-4-3-8-3-12-1zM28 7c-4-2-8-2-12 1v18c4-3 8-3 12-1z"/><path class="sl" d="M7 11c2-.5 4 0 6 1M25 11c-2-.5-4 0-6 1"/>',
+bread:'<path class="m" d="M4 17c0-6 5-10 12-10s12 4 12 10v7c0 1.5-1 2.5-2.5 2.5h-19C5 26.5 4 25.5 4 24z"/><path class="sl" d="M10 13l3 6M16 12l3 6M22 14l2 5"/>',
+matzah:'<rect class="m" x="5" y="5" width="22" height="22" rx="3"/><g class="l"><circle cx="11" cy="11" r="1.4"/><circle cx="16" cy="11" r="1.4"/><circle cx="21" cy="11" r="1.4"/><circle cx="11" cy="16" r="1.4"/><circle cx="16" cy="16" r="1.4"/><circle cx="21" cy="16" r="1.4"/><circle cx="11" cy="21" r="1.4"/><circle cx="16" cy="21" r="1.4"/><circle cx="21" cy="21" r="1.4"/></g>',
+wheat:'<path class="sm" d="M16 29V10"/><g class="m"><ellipse cx="12" cy="13" rx="2.2" ry="4" transform="rotate(-30 12 13)"/><ellipse cx="20" cy="13" rx="2.2" ry="4" transform="rotate(30 20 13)"/><ellipse cx="12" cy="20" rx="2.2" ry="4" transform="rotate(-30 12 20)"/><ellipse cx="20" cy="20" rx="2.2" ry="4" transform="rotate(30 20 20)"/><ellipse cx="16" cy="7" rx="2.2" ry="4"/></g>',
+barley:'<path class="sm" d="M16 29V12M16 12L14 3M16 12l2-9M16 17l-5-9M16 17l5-9M16 22L10 14M16 22l6-8"/><g class="m"><ellipse cx="16" cy="14" rx="2" ry="3.5"/><ellipse cx="16" cy="20" rx="2" ry="3.5"/></g>',
+millet:'<path class="sm" d="M9 29c0-12 3-19 13-21"/><g class="m"><circle cx="22" cy="8" r="2.3"/><circle cx="25" cy="12" r="2.3"/><circle cx="21" cy="12" r="2.3"/><circle cx="17" cy="11" r="2.3"/><circle cx="14" cy="15" r="2.3"/><circle cx="18" cy="16" r="2.3"/><circle cx="12" cy="20" r="2.3"/></g>',
+spelt:'<path class="sm" d="M10 29c0-8 1-14 4-20M22 29c0-8-1-14-4-20"/><g class="m"><rect x="8" y="9" width="4" height="6" rx="1.2" transform="rotate(-15 10 12)"/><rect x="9" y="17" width="4" height="6" rx="1.2" transform="rotate(-10 11 20)"/><rect x="20" y="9" width="4" height="6" rx="1.2" transform="rotate(15 22 12)"/><rect x="19" y="17" width="4" height="6" rx="1.2" transform="rotate(10 21 20)"/><rect x="14" y="3" width="4" height="6" rx="1.2"/></g>',
+rice:'<path class="m" d="M5 15h22a11 11 0 0 1-22 0z"/><path class="l" d="M8 15c0-5 4-8 8-8s8 3 8 8z"/><path class="sm" d="M13 11l2 1M17 10l2 1M15 13l2 1M19 13l2 1"/>',
+roti:'<circle class="m" cx="16" cy="16" r="12"/><circle class="sl" cx="16" cy="16" r="8"/><g class="a"><circle cx="12" cy="13" r="1.8"/><circle cx="20" cy="18" r="2"/><circle cx="15" cy="21" r="1.5"/></g>',
+fig:'<path class="m" d="M16 29c-6 0-9-4-9-9 0-4 3-7 7-9l.8-4h2.4l.8 4c4 2 7 5 7 9 0 5-3 9-9 9z"/><path class="sl" d="M12 21c0 3 2 5 4 6M20 21c0 3-2 5-4 6"/><path class="sm" d="M16 7V4"/><circle class="a" cx="16" cy="21" r="2"/>',
+grapes:'<g class="m"><circle cx="10" cy="14" r="3.6"/><circle cx="16" cy="14" r="3.6"/><circle cx="22" cy="14" r="3.6"/><circle cx="13" cy="20" r="3.6"/><circle cx="19" cy="20" r="3.6"/><circle cx="16" cy="26" r="3.6"/></g><path class="sm" d="M16 10V5"/><path class="a" d="M17 6c3-3 7-2 8 0-2 3-6 3-8 0z"/>',
+raisins:'<ellipse class="m" cx="11" cy="12" rx="5" ry="3.5" transform="rotate(-20 11 12)"/><ellipse class="m" cx="21" cy="14" rx="5" ry="3.5" transform="rotate(15 21 14)"/><ellipse class="m" cx="15" cy="22" rx="5.5" ry="3.5"/><path class="sl" d="M8 11l4 2M19 13l4 2M12 21l5 2"/>',
+pomegranate:'<circle class="a" cx="16" cy="18.5" r="9.5"/><path class="a" d="M10.5 11 12 5l3 3 1-4 1 4 3-3 1.5 6z"/><path class="sl" d="M12 20c2 2 6 2 8 0M16 14v3"/>',
+dates:'<path class="m" d="M10 9c3-5 11-5 13-1 2 4 0 12-3 17-2 3-7 3-9 0-3-4-4-11-1-16z"/><path class="sl" d="M13 12c2 4 2 8 1 11M18 11c1 4 1 8 0 12"/><path class="sm" d="M17 7c0-2 1-3 3-3"/>',
+olives:'<path class="sm" d="M4 8c8 2 16 2 24-2"/><ellipse class="m" cx="11" cy="19" rx="5" ry="7" transform="rotate(-18 11 19)"/><ellipse class="m" cx="21" cy="19" rx="5" ry="7" transform="rotate(18 21 19)"/><path class="sl" d="M9 17c0-1 1-2 2-3M23 17c0-1-1-2-2-3"/><path class="sm" d="M12 12l-2-4M20 12l2-4"/>',
+apple:'<path class="a" d="M16 10c-3-2-9-1-9 6 0 6 4 11 7 11 1 0 1.5-.6 2-.6s1 .6 2 .6c3 0 7-5 7-11 0-7-6-8-9-6z"/><path class="sm" d="M16 10c0-3 1-5 3-6"/><path class="m" d="M20 6c2-2 5-1 6 0-1 2-4 3-6 1z"/>',
+mulberry:'<ellipse class="a" cx="16" cy="18" rx="8" ry="10"/><g class="l"><circle cx="12" cy="13" r=".9"/><circle cx="16" cy="12" r=".9"/><circle cx="20" cy="13" r=".9"/><circle cx="13" cy="17" r=".9"/><circle cx="18" cy="17" r=".9"/><circle cx="15" cy="21" r=".9"/><circle cx="20" cy="22" r=".9"/><circle cx="12" cy="23" r=".9"/></g><path class="sm" d="M16 8V4"/><path class="m" d="M17 5c2-2 5-2 7 0-2 2-5 2-7 0z"/>',
+mandrake:'<path class="m" d="M3 24c6-8 20-8 26 0-7 4-19 4-26 0z"/><circle class="a" cx="11" cy="17" r="3.5"/><circle class="a" cx="19" cy="15" r="3.5"/><circle class="a" cx="15" cy="21" r="3"/>',
+melon:'<path class="m" d="M3 14h26a13 13 0 0 1-26 0z"/><path class="a" d="M6 14h20a10 10 0 0 1-20 0z"/><g class="l"><ellipse cx="12" cy="18" rx=".9" ry="1.6"/><ellipse cx="16" cy="21" rx=".9" ry="1.6"/><ellipse cx="20" cy="18" rx=".9" ry="1.6"/></g>',
+carob:'<path class="m" d="M3 15c4-8 14-10 25-6-1 5-4 8-8 9-6 1-12 0-17-3z"/><path class="sl" d="M8 15c4-4 10-6 16-5M11 17c4-2 8-3 12-3"/>',
+almond:'<path class="m" d="M13 4c7 4 9 13 3 24C8 18 8 8 13 4z"/><path class="sl" d="M13 9c2 5 2 10 2 14"/><path class="m" d="M22 12c4 3 5 8 1 15-5-6-5-11-1-15z"/>',
+pistachio:'<path class="m" d="M7 9c3-4 15-4 18 0 1 8-4 17-9 17S6 17 7 9z"/><path class="a" d="M12 12c1 6 2 9 4 11 2-2 3-5 4-11-3-2-6-2-8 0z"/><path class="sm" d="M14 26l-1 3"/>',
+walnut:'<circle class="m" cx="16" cy="16" r="10"/><path class="sl" d="M16 6v20M10 11c2 2 2 8 0 10M22 11c-2 2-2 8 0 10"/>',
+mustard:'<circle class="a" cx="16" cy="25" r="3.5"/><path class="sm" d="M16 22V11"/><path class="m" d="M16 13c-1-5-6-6-9-5 0 4 4 6 9 5zM16 11c1-4 5-6 9-5-1 5-5 6-9 5z"/>',
+lentils:'<g class="m"><circle cx="9" cy="11" r="4"/><circle cx="19" cy="9" r="4"/><circle cx="24" cy="18" r="4"/><circle cx="13" cy="20" r="4"/></g><circle class="a" cx="20" cy="25" r="3"/><path class="sl" d="M7 11h4M17 9h4M22 18h4M11 20h4"/>',
+beans:'<path class="m" d="M5 22C4 12 14 5 27 6c0 12-8 21-20 18z"/><g class="l"><circle cx="12" cy="17" r="2.5"/><circle cx="17" cy="14" r="2.5"/><circle cx="22" cy="11" r="2.2"/></g>',
+chickpea:'<path class="m" d="M13 9c2 2 6 2 8 0 3 3 5 6 4 10-1 5-6 8-10 8s-8-3-8-8c0-3 2-7 6-10z"/><path class="sl" d="M14 20c1 2 3 3 5 2"/>',
+cucumber:'<rect class="m" x="3" y="12" width="26" height="9" rx="4.5" transform="rotate(-25 16 16.5)"/><g class="l"><circle cx="10" cy="19" r="1"/><circle cx="15" cy="17" r="1"/><circle cx="20" cy="14" r="1"/><circle cx="24" cy="12" r="1"/></g>',
+leek:'<path class="m" d="M16 4c-1 4-6 6-7 11h14c-1-5-6-7-7-11z"/><rect class="l" x="12" y="15" width="8" height="12" rx="2"/><path class="sm" d="M12 15h8M12 27h8M12 15v12M20 15v12M14 28l-1 2M16 28v2M18 28l1 2"/>',
+onion:'<path class="a" d="M16 8c-5 3-9 7-9 12a9 9 0 0 0 18 0c0-5-4-9-9-12z"/><path class="sl" d="M16 10c-2 4-2 12 0 18M16 10c4 4 4 12 0 18"/><path class="sm" d="M16 8V3"/>',
+garlic:'<path class="ol" d="M16 8c-5 2-10 6-10 12 0 4 4 7 10 7s10-3 10-7c0-6-5-10-10-12z"/><path class="sm" d="M16 8V4M12 11c-2 4-2 10 0 15M20 11c2 4 2 10 0 15M16 11v15"/>',
+gourd:'<path class="m" d="M13.5 3h5c.7 2.5.2 4-.3 6.5 4.6 1.5 7.3 5 7.3 9.2 0 5.3-4.2 9.3-9.5 9.3S6.5 24 6.5 18.7c0-4.2 2.7-7.7 7.3-9.2C13.3 7 12.8 5.5 13.5 3z"/><path class="sl" d="M12 17c0 3 1 6 3 8"/>',
+lettuce:'<path class="m" d="M16 28C6 24 4 14 8 8c3 3 5 3 8 0 3 3 5 3 8 0 4 6 2 16-8 20z"/><path class="sl" d="M16 26V12M16 20l-4-4M16 20l4-4"/>',
+salt:'<path class="ol" d="M6 19l5-3 5 3v6l-5 3-5-3z"/><path class="ol" d="M16 12l5-3 5 3v6l-5 3-5-3z"/><path class="sm" d="M6 19l5 3 5-3M16 12l5 3 5-3"/>',
+hyssop:'<path class="sm" d="M16 29V12M16 24l-5-3M16 24l5-3M16 19l-5-3M16 19l5-3"/><rect class="a" x="14" y="3" width="4" height="12" rx="2"/><g class="l"><circle cx="16" cy="6" r=".8"/><circle cx="16" cy="9" r=".8"/><circle cx="16" cy="12" r=".8"/></g>',
+cumin:'<g class="m"><path d="M7 21c0-8 4-13 8-14-1 5-2 10-8 14z"/><path d="M15 26c0-8 4-13 8-14-1 5-2 10-8 14z"/></g><path class="sl" d="M9 17c1-3 3-5 5-7M17 22c1-3 3-5 5-7"/>',
+nigella:'<g class="m"><ellipse cx="16" cy="8" rx="2.5" ry="4.5"/><ellipse cx="16" cy="8" rx="2.5" ry="4.5" transform="rotate(72 16 16)"/><ellipse cx="16" cy="8" rx="2.5" ry="4.5" transform="rotate(144 16 16)"/><ellipse cx="16" cy="8" rx="2.5" ry="4.5" transform="rotate(216 16 16)"/><ellipse cx="16" cy="8" rx="2.5" ry="4.5" transform="rotate(288 16 16)"/><circle cx="16" cy="16" r="5"/></g><circle class="a" cx="16" cy="16" r="2.5"/>',
+coriander:'<path class="m" d="M16 28L5 10c3-3 7-3 11 0 4-3 8-3 11 0z"/><path class="sl" d="M16 26V11M16 20l-5-6M16 20l5-6"/>',
+dill:'<path class="sm" d="M16 29V10M16 22l-6-7M16 22l6-7M16 16l-5-7M16 16l5-7M16 10l-3-6M16 10l3-6"/><g class="m"><circle cx="10" cy="15" r="1.4"/><circle cx="22" cy="15" r="1.4"/><circle cx="11" cy="9" r="1.4"/><circle cx="21" cy="9" r="1.4"/><circle cx="13" cy="4" r="1.4"/><circle cx="19" cy="4" r="1.4"/></g>',
+mint:'<path class="sm" d="M16 29V6"/><g class="m"><ellipse cx="10" cy="22" rx="5" ry="3" transform="rotate(-25 10 22)"/><ellipse cx="22" cy="22" rx="5" ry="3" transform="rotate(25 22 22)"/><ellipse cx="11" cy="14" rx="4.5" ry="2.5" transform="rotate(-30 11 14)"/><ellipse cx="21" cy="14" rx="4.5" ry="2.5" transform="rotate(30 21 14)"/><ellipse cx="16" cy="7" rx="2.5" ry="4"/></g>',
+rue:'<path class="sm" d="M16 29V17"/><g class="m"><circle cx="16" cy="11" r="4.2"/><circle cx="9.5" cy="17" r="4.2"/><circle cx="22.5" cy="17" r="4.2"/></g><path class="sl" d="M16 17v-9M13 17l-4-1M19 17l4-1"/>',
+saffron:'<path class="m" d="M16 5c-3 3-5 8-5 14h10c0-6-2-11-5-14z"/><path class="m" d="M8 10c-1 6 1 10 5 12-2-4-3-8 0-12zM24 10c1 6-1 10-5 12 2-4 3-8 0-12z"/><path class="sa" d="M16 20c0-3-1-6-2-9M16 20c0-3 1-6 2-9M16 20v-11"/><path class="sm" d="M16 20v9"/>',
+cinnamon:'<rect class="m" x="4" y="10" width="22" height="7" rx="3.5" transform="rotate(-20 15 13)"/><rect class="m" x="6" y="18" width="22" height="7" rx="3.5" transform="rotate(-20 17 21)"/><path class="sl" d="M9 14l12-4M11 22l12-4"/>',
+cassia:'<path class="m" d="M4 20c0-6 4-10 10-10l14-4c0 7-4 12-10 14-4 1-10 2-14 0z"/><path class="sl" d="M7 19c6-1 12-4 17-9"/>',
+honey:'<path class="a" d="M9.5 4.5l4.8 2.7v5.5l-4.8 2.8-4.8-2.8V7.2z"/><path class="m" d="M19.8 4.5l4.8 2.7v5.5l-4.8 2.8-4.8-2.8V7.2z"/><path class="a" d="M14.9 12.8l4.8 2.7V21l-4.8 2.8-4.8-2.8v-5.5z"/><path class="m" d="M24 20c2 3 3 4 3 6a3 3 0 0 1-6 0c0-2 1-3 3-6z"/>',
+milk:'<path class="m" d="M12 4h8v4c3 1.5 5 4.5 5 8.5V25a3 3 0 0 1-3 3H10a3 3 0 0 1-3-3v-8.5C7 12.5 9 9.5 12 8z"/><rect class="l" x="7" y="14" width="18" height="6"/>',
+butter:'<path class="m" d="M4 14l6-6h18v10l-6 6H4z"/><path class="sl" d="M4 14h18l6-6M22 14v10"/>',
+cheese:'<path class="m" d="M3 24V13L27 8v16z"/><path class="sl" d="M3 13l24-5"/><g class="l"><circle cx="10" cy="19" r="2"/><circle cx="19" cy="15" r="1.6"/><circle cx="22" cy="20" r="2"/></g>',
+eggs:'<path class="ol" d="M12 5c-4 3-6 8-6 13a6 6 0 0 0 12 0c0-5-2-10-6-13z"/><path class="a" d="M20 11c-3 2-4 6-4 9a5 5 0 0 0 10 0c0-3-1-7-6-9z"/>',
+fish:'<ellipse class="m" cx="14" cy="16" rx="10" ry="6"/><path class="m" d="M22 16l7-6v12z"/><circle class="l" cx="9" cy="14" r="1.5"/><path class="sl" d="M14 11v10"/>',
+lamb:'<g class="m"><circle cx="11" cy="12" r="5"/><circle cx="17" cy="10" r="5"/><circle cx="22" cy="14" r="5"/><circle cx="13" cy="17" r="5"/><circle cx="19" cy="18" r="5"/></g><ellipse class="a" cx="6" cy="19" rx="3.5" ry="4.5"/><circle class="l" cx="5" cy="18" r="1"/><path class="sm" d="M12 22v6M20 22v6"/>',
+goat:'<path class="m" d="M9 12c0-3 3-4 7-4s7 1 7 4l-2 9c-1 2-2 3-5 3s-4-1-5-3z"/><path class="sm" d="M10 9C7 6 8 3 10 2M22 9c3-3 2-6 0-7"/><path class="a" d="M16 24l-2 5h4z"/><g class="l"><circle cx="13" cy="14" r="1.2"/><circle cx="19" cy="14" r="1.2"/></g>',
+beef:'<path class="m" d="M8 12c0-3 4-5 8-5s8 2 8 5l-1 8c0 4-3 6-7 6s-7-2-7-6z"/><path class="sm" d="M8 10C3 10 2 5 3 3M24 10c5 0 6-5 5-7"/><ellipse class="a" cx="16" cy="22" rx="5" ry="3.5"/><g class="l"><circle cx="12" cy="14" r="1.2"/><circle cx="20" cy="14" r="1.2"/></g>',
+venison:'<path class="m" d="M11 15c0-2 2-3 5-3s5 1 5 3l-1 6c-1 2-2 3-4 3s-3-1-4-3z"/><path class="sm" d="M12 12L8 5M8 5L5 6M8 5V2M8 8L5 9M20 12l4-7M24 5l3 1M24 5V2M24 8l3 1"/><circle class="a" cx="16" cy="22" r="1.8"/>',
+quail:'<ellipse class="m" cx="15" cy="19" rx="10" ry="7"/><circle class="m" cx="23" cy="12" r="4.5"/><path class="a" d="M27 12l4 1-4 2z"/><path class="sm" d="M23 8c0-2 1-4 3-4M13 26v3M17 26v3"/><g class="l"><circle cx="24" cy="11" r="1"/><circle cx="10" cy="18" r="1"/><circle cx="14" cy="21" r="1"/><circle cx="18" cy="17" r="1"/></g>',
+locust:'<ellipse class="m" cx="15" cy="18" rx="9" ry="4" transform="rotate(-10 15 18)"/><circle class="m" cx="25" cy="15" r="3.5"/><path class="sm" d="M12 17L7 7l9-1M12 18l-8 8M16 20l-4 8M20 20l1 8M26 12l3-7M28 14l3-3"/><circle class="l" cx="26" cy="14" r="1"/>',
+manna:'<g class="m"><circle cx="9" cy="9" r="3"/><circle cx="20" cy="7" r="2.5"/><circle cx="25" cy="14" r="3"/><circle cx="13" cy="16" r="3.2"/><circle cx="21" cy="22" r="3"/><circle cx="8" cy="24" r="2.5"/></g><path class="sa" d="M4 4l2 2M27 4l-2 2M16 2v3"/>',
+wine:'<path class="m" d="M9 4h14c0 8-2 12-7 12S9 12 9 4z"/><path class="a" d="M10 8h12c-.5 4-2.5 6-6 6s-5.5-2-6-6z"/><path class="sm" d="M16 16v9M11 28h10"/>',
+oil:'<path class="m" d="M12 3h8v4c4 2 7 6 7 12 0 6-4 10-11 10S5 25 5 19c0-6 3-10 7-12z"/><path class="a" d="M6 17h20v3H6z"/>',
+vinegar:'<path class="m" d="M13 3h6v6l3 5v12a3 3 0 0 1-3 3h-6a3 3 0 0 1-3-3V14l3-5z"/><rect class="a" x="10" y="16" width="12" height="7"/>',
+water:'<path class="m" d="M16 4c-5 7-9 11-9 16a9 9 0 0 0 18 0c0-5-4-9-9-16z"/><path class="sl" d="M11 20a5 5 0 0 0 4 5"/>',
+coconut:'<circle class="m" cx="16" cy="16" r="12.5"/><circle class="l" cx="16" cy="16" r="8.5"/><path class="a" d="M16 10c-2 3-3 4-3 6a3 3 0 0 0 6 0c0-2-1-3-3-6z"/>',
+mango:'<path class="a" d="M9 8c6-4 17 2 17 12 0 6-5 9-10 8-6-1-10-6-9-12 0-3 1-6 2-8z"/><path class="m" d="M14 7c0-2 2-4 5-4-1 3-3 5-5 4z"/><path class="sl" d="M11 17c1 3 3 5 6 6"/>',
+banana:'<path class="m" d="M6 6c-2 12 5 21 21 20-3 3-9 5-14 2C5 24 2 14 6 6z"/><path class="a" d="M5 8l2-5 3 2z"/>',
+bael:'<circle class="m" cx="16" cy="19" r="10"/><path class="sl" d="M16 9v20M9 12c4 4 4 12 0 16M23 12c-4 4-4 12 0 16"/><g class="a"><ellipse cx="11" cy="5" rx="2.5" ry="3.5" transform="rotate(-40 11 5)"/><ellipse cx="16" cy="4" rx="2.5" ry="3.5"/><ellipse cx="21" cy="5" rx="2.5" ry="3.5" transform="rotate(40 21 5)"/></g>',
+jackfruit:'<ellipse class="m" cx="16" cy="18" rx="9" ry="11"/><path class="sl" d="M9 13l4 3 4-3 4 3M9 20l4 3 4-3 4 3M13 8l3 3 3-3"/><path class="sm" d="M16 7V4"/><path class="a" d="M16 4c3-2 7-1 8 1-3 2-6 2-8-1z"/>',
+jambu:'<path class="a" d="M8 9c4-3 12-3 16 0 1 7-3 18-8 18S7 16 8 9z"/><path class="sl" d="M12 9c1 5 2 10 4 14M20 9c-1 5-2 10-4 14"/><path class="m" d="M10 9c2-3 10-3 12 0z"/>',
+amla:'<g class="m"><circle cx="11" cy="19" r="6.5"/><circle cx="22" cy="19" r="6.5"/><circle cx="16.5" cy="10.5" r="6.5"/></g><path class="sl" d="M11 13v12M22 13v12M16.5 4v13"/><path class="a" d="M16 4c3-2 7-2 9 0-3 3-6 3-9 0z"/>',
+haritaki:'<ellipse class="m" cx="16" cy="17" rx="9" ry="10"/><path class="sl" d="M16 7v20M10 9c-3 5-3 11 0 16M22 9c3 5 3 11 0 16"/><path class="sm" d="M16 7V4"/>',
+lotus:'<path class="a" d="M16 5c-5 4-5 12 0 17 5-5 5-13 0-17z"/><path class="a" d="M4 12c7 0 12 5 12 11-8 0-12-4-12-11zM28 12c-7 0-12 5-12 11 8 0 12-4 12-11z"/><path class="sm" d="M3 27h26"/>',
+peach:'<circle class="a" cx="16" cy="18" r="9"/><path class="sl" d="M16 10c-2 4-2 12 1 17"/><path class="m" d="M16 9c1-3 4-5 9-4-1 3-5 5-9 4z"/>',
+goji:'<path class="sm" d="M4 8c8 0 14 4 24 14"/><g class="a"><ellipse cx="9" cy="14" rx="2.5" ry="4.5" transform="rotate(-20 9 14)"/><ellipse cx="16" cy="17" rx="2.5" ry="4.5" transform="rotate(-20 16 17)"/><ellipse cx="22" cy="12" rx="2.5" ry="4.5" transform="rotate(20 22 12)"/></g><path class="m" d="M13 9c2-3 5-3 7-2-1 3-4 4-7 2z"/>',
+jujube:'<ellipse class="a" cx="16" cy="18" rx="8" ry="10"/><path class="sl" d="M12 14c0 3 0 6 2 9"/><path class="sm" d="M16 8c0-2 1-3 3-4"/>',
+ginseng:'<path class="m" d="M13 7c0-3 6-3 6 0v8l5 11c0 1-1 1-2 0l-4-7-2 9c0 1-2 1-2 0l-2-9-4 7c-1 1-2 1-2 0l5-11z"/><path class="sm" d="M8 14l5 2M24 14l-5 2"/><g class="a"><circle cx="14" cy="4" r="1.6"/><circle cx="18" cy="4" r="1.6"/></g>',
+etrog:'<path class="a" d="M16 5c2 0 3 1 3 2 5 1 8 5 8 10 0 6-5 10-11 10S5 23 5 17c0-5 3-9 8-10 0-1 1-2 3-2z"/><path class="sm" d="M16 5V3"/><path class="sl" d="M10 14c-1 3 0 6 2 8"/>',
+sidr:'<path class="sm" d="M4 24c8-2 14-8 24-6"/><g class="a"><circle cx="10" cy="19" r="3.5"/><circle cx="17" cy="15" r="3.5"/><circle cx="24" cy="15" r="3.5"/></g><path class="sm" d="M12 25l-1 3M20 22l-1 3"/>',
+ginger:'<ellipse class="m" cx="16" cy="19" rx="12" ry="6"/><ellipse class="m" cx="9" cy="12" rx="3.5" ry="6" transform="rotate(-15 9 12)"/><ellipse class="m" cx="21" cy="11" rx="3.5" ry="6" transform="rotate(20 21 11)"/><path class="sl" d="M10 16c1 3 1 5 0 7M16 15c1 3 1 6 0 9M22 16c1 3 1 5 0 7"/>',
+truffle:'<circle class="m" cx="16" cy="17" r="11"/><path class="sl" d="M9 13l3 2M17 9l1 4M22 16l-3 1M12 22l3-2M20 23l-1-3"/>',
+tea:'<path class="m" d="M5 14h18v5a8 8 0 0 1-8 8h-2a8 8 0 0 1-8-8z"/><path class="sm" d="M23 16h2a3 3 0 0 1 0 6h-2"/><path class="sa" d="M10 4c-2 2 2 3 0 6M16 4c-2 2 2 3 0 6"/>',
+ghee:'<path class="m" d="M8 12h16v13a3 3 0 0 1-3 3H11a3 3 0 0 1-3-3z"/><rect class="a" x="7" y="7" width="18" height="5" rx="1.5"/><path class="sl" d="M12 18h8M12 22h8"/>',
+jaggery:'<rect class="m" x="13" y="6" width="6" height="24" rx="2" transform="rotate(20 16 18)"/><path class="sl" d="M11 12l6 2M10 18l6 2M9 24l6 2"/><path class="a" d="M21 6c4-2 7-1 8 1-3 2-6 2-8-1z"/>',
+kheer:'<path class="m" d="M4 15h24c0 7-5 12-12 12S4 22 4 15z"/><path class="l" d="M7 15c1-2 4-3 9-3s8 1 9 3z"/><g class="a"><circle cx="12" cy="14" r="1.2"/><circle cx="17" cy="13.5" r="1.2"/><circle cx="21" cy="14.2" r="1.2"/></g><path class="sa" d="M12 8c-1-2 1-3 0-5M18 8c-1-2 1-3 0-5"/>',
+karah:'<ellipse class="m" cx="16" cy="23" rx="13" ry="4"/><path class="a" d="M6 22c0-8 4-13 10-13s10 5 10 13c-3 2-17 2-20 0z"/><path class="sl" d="M11 17c1 1 3 1 4 0M17 15c1 1 3 1 4 0"/>',
+tulsi:'<path class="a" d="M9 22h14l-2 7H11z"/><path class="sm" d="M16 22V8"/><g class="m"><ellipse cx="11" cy="18" rx="4" ry="2.3" transform="rotate(-30 11 18)"/><ellipse cx="21" cy="18" rx="4" ry="2.3" transform="rotate(30 21 18)"/><ellipse cx="12" cy="12" rx="3.5" ry="2" transform="rotate(-30 12 12)"/><ellipse cx="20" cy="12" rx="3.5" ry="2" transform="rotate(30 20 12)"/><ellipse cx="16" cy="6" rx="2" ry="3.2"/></g>',
+betel:'<path class="m" d="M16 28C5 22 5 8 16 6c11 2 11 16 0 22z"/><path class="sl" d="M16 28V9M16 20l-5-4M16 20l5-4"/><circle class="a" cx="25" cy="25" r="3.5"/>',
+sesame:'<g class="m"><path d="M7 7c4-1 5 3 3 6-4 1-5-3-3-6z"/><path d="M19 5c4-1 5 3 3 6-4 1-5-3-3-6z"/><path d="M12 16c4-1 5 3 3 6-4 1-5-3-3-6z"/><path d="M23 17c4-1 5 3 3 6-4 1-5-3-3-6z"/><path d="M5 22c4-1 5 3 3 6-4 1-5-3-3-6z"/></g>'
+};
+const UI={
+search:'<circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/>',
+menu:'<path d="M4 7h16M4 12h16M4 17h10"/>',
+close:'<path d="M6 6l12 12M18 6L6 18"/>',
+heart:'<path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.600-7 10-7 10z"/>',
+foods:'<path d="M12 8c-4 0-7 3-7 7s3 6 7 6 7-2 7-6-3-7-7-7z"/><path d="M12 8c0-2 1-4 3-5M12 8C11 6 9 5 7 5"/>',
+plan:'<rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/>',
+meals:'<path d="M3 13h18a9 9 0 0 1-18 0z"/><path d="M9 9c0-2 2-2 2-4M14 9c0-2 2-2 2-4"/>',
+tonics:'<path d="M9 3h6M10 3v5L5 18a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-10V3"/><path d="M7.500 14h9"/>',
+lists:'<path d="M8 6h12M8 12h12M8 18h12"/><circle cx="4" cy="6" r="1"/><circle cx="4" cy="12" r="1"/><circle cx="4" cy="18" r="1"/>',
+bookmark:'<path d="M6 4h12v17l-6-4-6 4z"/>',
+plus:'<path d="M12 5v14M5 12h14"/>',
+chev:'<path d="M6 9l6 6 6-6"/>',
+copy:'<rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h8"/>',
+trash:'<path d="M4 7h16M10 11v6M14 11v6M6 7l1 13h10l1-13M9 7V4h6v3"/>',
+check:'<path d="M5 12l5 5 9-10"/>',
+edit:'<path d="M4 20h4L19 9l-4-4L4 16z"/>'
+};
+const ico=k=>`<svg class="ic" viewBox="0 0 32 32" style="--c1:${(COL[k]||[])[0]||"var(--main)"};--c2:${(COL[k]||[])[1]||"var(--accent)"}" aria-hidden="true">${IC[k]||""}</svg>`;
+const ui=(k,w)=>`<svg class="ui" viewBox="0 0 24 24" width="${w||22}" height="${w||22}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${UI[k]}</svg>`;
+// natural food colours: [main, secondary]
+const COL={
+book:["#6B4A2B","#C9A24B"],bread:["#C98A3E","#A5601F"],matzah:["#D9B06A","#A5601F"],wheat:["#D4A02C","#B8861B"],barley:["#C9A24B","#B8861B"],millet:["#E0B83F","#B8861B"],spelt:["#BE9440","#A5601F"],
+rice:["#5B7A99","#D9B06A"],roti:["#D1A15F","#7A4A22"],fig:["#6B3A5B","#C45A7A"],grapes:["#6A3D8F","#4F8A3C"],raisins:["#5A3A2A","#8A5A3A"],pomegranate:["#B3263B","#B3263B"],
+dates:["#6B3F1F","#8A5A3A"],olives:["#4E5B2A","#7A8F3A"],apple:["#4F8A3C","#C8322D"],mulberry:["#4F8A3C","#5B2A6B"],mandrake:["#5E8C3A","#E0A32B"],melon:["#3F8F4A","#E4506B"],carob:["#5A3A22","#8A5A3A"],
+almond:["#B88A5A","#8A5A3A"],pistachio:["#CDBB8E","#8DB255"],walnut:["#9A6E43","#6B4A2B"],mustard:["#5E8C3A","#D6A92B"],lentils:["#A6783C","#D2492A"],beans:["#6FA34A","#4F8A3C"],chickpea:["#D9B26B","#B8862F"],
+cucumber:["#3F8F4A","#2F6F3A"],leek:["#3E8A4F","#6FA84A"],onion:["#7A8F3A","#B8497E"],garlic:["#9A8A6A","#C9B88A"],gourd:["#8DA83A","#6F8A2A"],lettuce:["#6FA84A","#4F8A3C"],salt:["#7A8FA6","#A9B9C8"],
+hyssop:["#5E8C3A","#7A4FB0"],cumin:["#8A6B3A","#B8862F"],nigella:["#2F2F36","#C9A24B"],coriander:["#4F9A4A","#2F7A3A"],dill:["#6FA84A","#4F8A3C"],mint:["#3E9A5A","#2F7A3A"],rue:["#5F9E8F","#4F8A7A"],
+saffron:["#8A5CB8","#D9381E"],cinnamon:["#A5612B","#7A4620"],cassia:["#8A4B24","#6B3A1C"],honey:["#C98312","#E8A81D"],milk:["#9DB4C8","#E8D9B0"],butter:["#F0CF6A","#D9A62A"],cheese:["#F2B735","#D9962A"],
+eggs:["#C9B28A","#B8743A"],fish:["#5E8DB5","#3E6E96"],lamb:["#A89F8D","#4A4540"],goat:["#A8997F","#6B5B45"],beef:["#7A4A2A","#D9A38A"],venison:["#A8703A","#3A2A20"],quail:["#9C7A52","#D98A2B"],locust:["#7A9B3A","#5A7A2A"],manna:["#E3C77A","#E8A81D"],
+wine:["#A9B9C8","#7A1F3D"],oil:["#A67B3C","#8A9B2A"],vinegar:["#7A4F2F","#B8482A"],water:["#3A8FD0","#7FC0EC"],coconut:["#6B4226","#8EC9E8"],mango:["#4F8A3C","#F29B2D"],banana:["#F2CF3A","#6B5A2A"],
+bael:["#B7B03F","#4F8A3C"],jackfruit:["#A9B03A","#4F8A3C"],jambu:["#4F8A3C","#E8708A"],amla:["#9DBB4F","#4F8A3C"],haritaki:["#B88A3A","#8A6A2A"],lotus:["#3A8FD0","#E86FA0"],peach:["#4F8A3C","#F29A7B"],
+goji:["#5E7A33","#E24A1F"],jujube:["#6B4A2A","#A83A2A"],ginseng:["#D9BE8A","#D43A2A"],etrog:["#5E8C3A","#E6C73A"],sidr:["#6B5A2A","#D9822B"],ginger:["#C9A067","#A5783A"],truffle:["#4A3A30","#6B5A4A"],
+tea:["#6B8F5A","#9AA5AE"],ghee:["#D9A63A","#B5651D"],jaggery:["#C98A2E","#5E9A3A"],kheer:["#8FB0CF","#B5833A"],karah:["#B5C0CC","#C98A2E"],tulsi:["#4F9A4A","#B5653A"],betel:["#4A9A4A","#7A3A2A"],sesame:["#CDB27A","#A5883A"]
+};
+// wheat bundle mark: stalks fanned and tied
+const WHEAT='<g stroke-linecap="round"><g transform="rotate(-22 32 46)"><path d="M32 56V16" stroke="#C98A1E" stroke-width="2.4" fill="none"/><g fill="#D9A02C"><ellipse cx="28" cy="20" rx="2.6" ry="5.4" transform="rotate(-28 28 20)"/><ellipse cx="36" cy="20" rx="2.6" ry="5.4" transform="rotate(28 36 20)"/><ellipse cx="28" cy="29" rx="2.6" ry="5.4" transform="rotate(-28 28 29)"/><ellipse cx="36" cy="29" rx="2.6" ry="5.4" transform="rotate(28 36 29)"/><ellipse cx="32" cy="12" rx="2.6" ry="5.4"/></g></g><g transform="rotate(22 32 46)"><path d="M32 56V16" stroke="#C98A1E" stroke-width="2.4" fill="none"/><g fill="#D9A02C"><ellipse cx="28" cy="20" rx="2.6" ry="5.4" transform="rotate(-28 28 20)"/><ellipse cx="36" cy="20" rx="2.6" ry="5.4" transform="rotate(28 36 20)"/><ellipse cx="28" cy="29" rx="2.6" ry="5.4" transform="rotate(-28 28 29)"/><ellipse cx="36" cy="29" rx="2.6" ry="5.4" transform="rotate(28 36 29)"/><ellipse cx="32" cy="12" rx="2.6" ry="5.4"/></g></g><path d="M32 58V12" stroke="#E0A92E" stroke-width="2.6" fill="none"/><g fill="#F2C14E"><ellipse cx="27.600" cy="17" rx="2.800" ry="5.800" transform="rotate(-28 27.600 17)"/><ellipse cx="36.400" cy="17" rx="2.800" ry="5.800" transform="rotate(28 36.400 17)"/><ellipse cx="27.600" cy="27" rx="2.800" ry="5.800" transform="rotate(-28 27.600 27)"/><ellipse cx="36.400" cy="27" rx="2.800" ry="5.800" transform="rotate(28 36.400 27)"/><ellipse cx="32" cy="8.500" rx="2.800" ry="5.800"/></g></g><rect x="24" y="42" width="16" height="6" rx="3" fill="#8A4B24"/>';
+const logo=(s,bg)=>`<svg class="logo" width="${s}" height="${s}" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="18" fill="${bg||"var(--main)"}"/><g transform="translate(6.400 6.400) scale(.8)">${WHEAT}</g></svg>`;
+const CATS={fruit:"Fruit",veg:"Vegetables & pulses",grain:"Grains & bread",nut:"Nuts & seeds",herb:"Herbs & spices",animal:"Dairy, meat & honey",drink:"Drinks & oils"};
+const TRAD={
+ bible:{n:"The Bible",e:"book",d:"Foods named in the Old and New Testaments. Counts are approximate King James Version word counts, including plurals."},
+ judaism:{n:"Judaism",e:"pomegranate",d:"Kosher laws in Leviticus 11 and Deuteronomy 14 set what may be eaten. Festival tables carry symbolic foods: matzah at Passover, apples and honey at Rosh Hashanah, the etrog at Sukkot."},
+ islam:{n:"Islam",e:"dates",d:"The Quran names the fruits of the earth and of paradise. Muslims traditionally break the Ramadan fast with dates, and sayings of the Prophet praise honey, olive oil and black seed."},
+ hinduism:{n:"Hinduism",e:"coconut",d:"Food is offered to the deity first, then shared as prasad. Many Hindus are vegetarian. Milk, curd, honey, sugar and ghee make up the five foods of panchamrita."},
+ buddhism:{n:"Buddhism",e:"lotus",d:"Monks traditionally lived on alms food. Before his awakening the Buddha accepted a bowl of milk-rice from Sujata, and the courtesan Amrapali gave a mango grove to the community."},
+ sikhism:{n:"Sikhism",e:"roti",d:"Every gurdwara runs a langar, a free vegetarian kitchen open to everyone, where all sit as equals. Karah prasad, made from wheat flour, ghee and sugar, is shared at the end of worship."},
+ taoism:{n:"Taoism",e:"peach",d:"Chinese myth places the peaches of immortality in the orchard of the Queen Mother of the West. Goji, jujube, ginseng and tea belong to the longevity food traditions linked with Taoist practice."}
+};
+const TORDER=["bible","judaism","islam","hinduism","buddhism","sikhism","taoism"];
+
+// [name, icon, category, approx KJV count or null, {tradition: "note|ref; ref"}]
+const RAW=[
+// grains & bread
+["Bread","bread","grain",360,{bible:"The everyday staple, baked fresh each day from barley or wheat.|Matthew 6:11; John 6:35"}],
+["Unleavened bread","matzah","grain",50,{bible:"Bread made without yeast, eaten at Passover and the Feast of Unleavened Bread.|Exodus 12:15-20; Luke 22:1",judaism:"Matzah is eaten through the eight days of Passover to recall the haste of leaving Egypt.|Exodus 12:39"}],
+["Wheat","wheat","grain",51,{bible:"First of the seven species of the Promised Land. The KJV often calls grain 'corn'.|Deuteronomy 8:8; John 12:24",sikhism:"Wheat flour is the base of langar roti and of karah prasad."}],
+["Barley","barley","grain",36,{bible:"Cheaper than wheat. The boy's five loaves were barley.|Ruth 1:22; John 6:9"}],
+["Millet","millet","grain",1,{bible:"One of six grains and pulses mixed in Ezekiel's bread.|Ezekiel 4:9"}],
+["Spelt","spelt","grain",3,{bible:"Translated 'rie' or 'fitches' in the KJV.|Exodus 9:32; Ezekiel 4:9"}],
+["Rice","rice","grain",null,{hinduism:"Whole rice grains (akshata) are offered in worship and thrown at weddings as a blessing.",buddhism:"Sujata offered the Buddha a bowl of milk-rice before his awakening."}],
+["Roti","roti","grain",null,{sikhism:"Fresh roti served with dal is the heart of every gurdwara langar."}],
+// fruit
+["Figs","fig","fruit",57,{bible:"Eaten fresh, dried or pressed into cakes. A sign of peace and plenty.|Genesis 3:7; Micah 4:4",islam:"A Quran chapter is named At-Tin, 'The Fig'.|Quran 95:1"}],
+["Grapes","grapes","fruit",34,{bible:"The spies carried one cluster on a pole between two men.|Numbers 13:23; Deuteronomy 23:24",islam:"Gardens of vines and grapes are named as signs of God's provision.|Quran 23:19"}],
+["Raisins","raisins","fruit",5,{bible:"Pressed clusters, carried to David as supplies.|1 Samuel 25:18; 2 Samuel 16:1"}],
+["Pomegranates","pomegranate","fruit",32,{bible:"Embroidered on the priest's robe and carved on the Temple pillars.|Deuteronomy 8:8; Song of Solomon 4:3",judaism:"Said to hold 613 seeds, matching the commandments. Eaten at Rosh Hashanah.|Numbers 13:23",islam:"Named among the fruits of the earth and of paradise.|Quran 6:99; 55:68"}],
+["Dates (palm)","dates","fruit",33,{bible:"The KJV says 'palm tree'. Jericho was the city of palm trees.|Psalm 92:12; Deuteronomy 34:3",judaism:"The 'honey' of Deuteronomy 8:8 is traditionally understood as date syrup.|Deuteronomy 8:8",islam:"Mary ate fresh dates beneath the palm. Muslims traditionally break the Ramadan fast with dates.|Quran 19:23-25"}],
+["Olives","olives","fruit",47,{bible:"The dove brought Noah an olive leaf. Fruit cured in brine.|Genesis 8:11; Psalm 52:8",islam:"The blessed olive tree is the image in the Light Verse.|Quran 24:35; 95:1"}],
+["Apples","apple","fruit",11,{bible:"Some scholars think this may be apricot or quince.|Song of Solomon 2:3; Proverbs 25:11",judaism:"Apple slices dipped in honey at Rosh Hashanah wish for a sweet year."}],
+["Mulberries","mulberry","fruit",4,{bible:"David waited for the sound in the tops of the mulberry trees.|2 Samuel 5:23-24"}],
+["Mandrakes","mandrake","fruit",6,{bible:"A small fragrant fruit Reuben found in the field.|Genesis 30:14; Song of Solomon 7:13"}],
+["Melons","melon","fruit",1,{bible:"Probably watermelon. Remembered from Egypt.|Numbers 11:5"}],
+["Carob pods","carob","fruit",1,{bible:"The 'husks' the prodigal son longed to eat were carob pods.|Luke 15:16"}],
+["Coconut","coconut","fruit",null,{hinduism:"Broken at temple doors and offered whole. The three eyes are likened to Shiva's three eyes."}],
+["Mango","mango","fruit",null,{hinduism:"Mango leaves hang over doorways at festivals and weddings.",buddhism:"Amrapali gave her mango grove to the Buddha and his community."}],
+["Banana","banana","fruit",null,{hinduism:"Whole bananas and banana leaves are used in worship and for serving food.",islam:"The 'talh' of the Quran's paradise is often understood as banana.|Quran 56:29"}],
+["Bael","bael","fruit",null,{hinduism:"Bael (bilva) leaves and fruit are offered to Shiva."}],
+["Jackfruit","jackfruit","fruit",null,{buddhism:"Heartwood of the jackfruit tree gives the saffron dye used for monks' robes in the Thai forest tradition."}],
+["Rose apple","jambu","fruit",null,{hinduism:"The jambu tree gives its name to Jambudvipa, the continent of the human world.",buddhism:"The Buddha as a boy is said to have entered deep meditation under a rose apple tree."}],
+["Amla","amla","fruit",null,{hinduism:"Indian gooseberry, sacred to Vishnu and honoured on Amalaka Ekadashi."}],
+["Haritaki","haritaki","fruit",null,{buddhism:"The Medicine Buddha is shown holding the myrobalan fruit as a healing remedy."}],
+["Peach","peach","fruit",null,{taoism:"The peaches of immortality ripen once every three thousand years in the orchard of the Queen Mother of the West."}],
+["Goji berries","goji","fruit",null,{taoism:"A longevity berry in Chinese food therapy."}],
+["Jujube","jujube","fruit",null,{taoism:"Red dates, long eaten in Chinese food therapy for calm and long life."}],
+["Etrog","etrog","fruit",null,{judaism:"The citron held with the lulav at Sukkot, taken as the 'fruit of goodly trees'.|Leviticus 23:40"}],
+["Sidr (lote berry)","sidr","fruit",null,{islam:"The lote tree marks the farthest boundary in the Prophet's night journey.|Quran 53:14; 56:28"}],
+["Lotus","lotus","fruit",null,{hinduism:"Lotus seeds (makhana) are eaten on fast days, and the flower is offered to Lakshmi.",buddhism:"The lotus rising clean from mud stands for purity of mind.",taoism:"He Xiangu, one of the Eight Immortals, is shown holding a lotus."}],
+// nuts & seeds
+["Almonds","almond","nut",10,{bible:"Aaron's rod budded and bore almonds overnight.|Numbers 17:8; Genesis 43:11"}],
+["Pistachios","pistachio","nut",1,{bible:"Jacob sent pistachios to Egypt as a gift ('nuts' in the KJV).|Genesis 43:11"}],
+["Walnuts","walnut","nut",1,{bible:"The 'garden of nuts' is usually taken to mean walnut trees.|Song of Solomon 6:11"}],
+["Mustard seed","mustard","nut",5,{bible:"Faith as small as a mustard seed can move mountains.|Matthew 13:31; 17:20"}],
+["Sesame","sesame","nut",null,{hinduism:"Sesame (til) is offered in rites for ancestors and shared as til-gul at Makar Sankranti.",taoism:"Black sesame is a longevity food in Chinese tradition."}],
+// vegetables & pulses
+["Lentils","lentils","veg",4,{bible:"Esau sold his birthright for a bowl of red lentil stew.|Genesis 25:34; Ezekiel 4:9",islam:"Named with cucumbers, garlic and onions among foods Israel craved.|Quran 2:61",sikhism:"Dal is served in every langar."}],
+["Beans","beans","veg",2,{bible:"Broad (fava) beans, brought to David in the wilderness.|2 Samuel 17:28; Ezekiel 4:9"}],
+["Chickpeas","chickpea","veg",3,{bible:"Likely among the 'pulse' of Daniel's diet.|2 Samuel 17:28; Daniel 1:12"}],
+["Cucumbers","cucumber","veg",2,{bible:"Remembered fondly by Israel from Egypt.|Numbers 11:5; Isaiah 1:8",islam:"Named among the foods the people asked Moses for.|Quran 2:61"}],
+["Leeks","leek","veg",1,{bible:"One of the Egyptian foods Israel missed.|Numbers 11:5"}],
+["Onions","onion","veg",1,{bible:"Remembered from Egypt.|Numbers 11:5",islam:"Named in the same list of foods.|Quran 2:61"}],
+["Garlic","garlic","veg",1,{bible:"Spelled 'garlick' in the KJV.|Numbers 11:5",islam:"Named in the same list of foods.|Quran 2:61"}],
+["Gourds","gourd","veg",7,{bible:"Jonah's shade plant, and the wild gourds that spoiled the prophets' stew.|Jonah 4:6; 2 Kings 4:39",islam:"A 'yaqtin' plant, often read as a gourd, sheltered Jonah.|Quran 37:146"}],
+["Bitter herbs","lettuce","veg",3,{bible:"Eaten at Passover. Likely endive, chicory or lettuce.|Exodus 12:8; Numbers 9:11",judaism:"Maror, often horseradish or romaine, recalls the bitterness of slavery.|Exodus 12:8"}],
+["Truffles","truffle","veg",null,{islam:"A saying of the Prophet calls the truffle ('kam'ah') a kind of manna.|Hadith, Bukhari and Muslim"}],
+["Betel leaf","betel","veg",null,{hinduism:"Betel leaf and areca nut are offered in worship and at weddings."}],
+// herbs & spices
+["Salt","salt","herb",41,{bible:"A preservative and a sign of covenant.|Matthew 5:13; Numbers 18:19"}],
+["Hyssop","hyssop","herb",12,{bible:"A fragrant herb, likely Syrian oregano (za'atar).|Exodus 12:22; Psalm 51:7"}],
+["Cumin","cumin","herb",4,{bible:"Spelled 'cummin' in the KJV. Tithed by the Pharisees.|Isaiah 28:25; Matthew 23:23"}],
+["Black cumin","nigella","herb",2,{bible:"The 'fitches' beaten out with a staff.|Isaiah 28:25-27",islam:"The Prophet is reported to have called black seed a cure for every illness except death.|Hadith, Sahih al-Bukhari"}],
+["Coriander","coriander","herb",2,{bible:"Manna was 'like coriander seed'.|Exodus 16:31; Numbers 11:7"}],
+["Dill (anise)","dill","herb",1,{bible:"Translated 'anise' in the KJV.|Matthew 23:23"}],
+["Mint","mint","herb",2,{bible:"Tithed by the Pharisees along with dill and cumin.|Matthew 23:23; Luke 11:42"}],
+["Rue","rue","herb",1,{bible:"A bitter garden herb the Pharisees tithed.|Luke 11:42"}],
+["Saffron","saffron","herb",1,{bible:"Listed among the precious spices of the garden.|Song of Solomon 4:14"}],
+["Cinnamon","cinnamon","herb",4,{bible:"An ingredient in the holy anointing oil.|Exodus 30:23; Proverbs 7:17"}],
+["Cassia","cassia","herb",4,{bible:"Another bark spice in the anointing oil.|Exodus 30:24; Ezekiel 27:19"}],
+["Ginger","ginger","herb",null,{islam:"Ginger ('zanjabil') flavours the drink of the righteous in paradise.|Quran 76:17"}],
+["Tulsi","tulsi","herb",null,{hinduism:"Holy basil grows in a pot in many courtyards and is offered to Vishnu."}],
+// dairy, meat, honey
+["Honey","honey","animal",61,{bible:"Wild bee honey and date syrup. 'A land flowing with milk and honey.'|Exodus 3:8; Proverbs 24:13",islam:"A drink of varied colours comes from the bees, 'in which is healing for people'.|Quran 16:68-69",hinduism:"One of the five foods of panchamrita."}],
+["Milk","milk","animal",48,{bible:"Mostly goat's and sheep's milk, often soured or made into curds.|Exodus 3:8; Isaiah 55:1",islam:"Rivers of milk are promised in paradise.|Quran 47:15",hinduism:"Sacred milk bathes the deity in abhishekam and opens panchamrita.",sikhism:"Milk goes into the kheer and chai served in the langar."}],
+["Butter / curds","butter","animal",10,{bible:"Abraham served curds and milk to his three visitors.|Genesis 18:8; Isaiah 7:15"}],
+["Cheese","cheese","animal",3,{bible:"David carried ten cheeses to his brothers' captain.|1 Samuel 17:18; 2 Samuel 17:29"}],
+["Eggs","eggs","animal",11,{bible:"Job asked if there was taste in the white of an egg.|Job 6:6; Luke 11:12"}],
+["Fish","fish","animal",57,{bible:"Grilled over coals by the Sea of Galilee. Jesus shared it after the resurrection.|Luke 24:42; John 21:9"}],
+["Lamb","lamb","animal",190,{bible:"The Passover lamb, and a title of Christ.|Exodus 12:3-5; John 1:29"}],
+["Goat & kid","goat","animal",120,{bible:"Rebekah cooked young goats for Isaac.|Genesis 27:9; Luke 15:29"}],
+["Beef (ox & calf)","beef","animal",200,{bible:"The fatted calf killed for the returning son.|Luke 15:23; Proverbs 15:17"}],
+["Venison","venison","animal",6,{bible:"Isaac asked Esau to bring him venison.|Genesis 27:3; 25:28"}],
+["Quail","quail","animal",4,{bible:"Sent to the Israelites in the evening in the wilderness.|Exodus 16:13; Numbers 11:31"}],
+["Locusts","locust","animal",24,{bible:"A permitted food. John the Baptist ate locusts and wild honey.|Leviticus 11:22; Matthew 3:4"}],
+["Manna","manna","animal",16,{bible:"Bread from heaven, fresh each morning in the wilderness.|Exodus 16:31; John 6:31"}],
+["Ghee","ghee","animal",null,{hinduism:"Clarified butter feeds the sacred fire and is offered in lamps.",sikhism:"Ghee, flour and sugar make karah prasad."}],
+["Jaggery","jaggery","animal",null,{hinduism:"Unrefined cane sugar, offered as prasad and shared at festivals."}],
+["Kheer","kheer","animal",null,{hinduism:"Sweet milk-rice pudding offered as prasad at festivals.",buddhism:"Many Buddhists recall Sujata's gift of milk-rice on the day marking the Buddha's awakening."}],
+["Karah prasad","karah","animal",null,{sikhism:"Equal parts wheat flour, ghee and sugar, shared with everyone at the end of worship."}],
+// drinks & oils
+["Wine","wine","drink",230,{bible:"Drunk at meals and feasts, often watered down.|Psalm 104:15; John 2:9"}],
+["Olive oil","oil","drink",190,{bible:"Used for cooking, lamps, anointing and medicine. Counted as 'oil'.|Deuteronomy 8:8; Psalm 23:5",judaism:"One jar of pure oil lasted eight days in the Temple. Hanukkah is marked with foods fried in oil.",islam:"The Prophet advised both eating and anointing with olive oil.|Hadith, Tirmidhi"}],
+["Vinegar","vinegar","drink",13,{bible:"Boaz invited Ruth to dip her bread in it.|Ruth 2:14; Proverbs 10:26"}],
+["Water","water","drink",600,{bible:"Springs, wells and the water of life. The count includes 'waters'.|Exodus 17:6; John 4:14",islam:"Every living thing was made from water.|Quran 21:30"}],
+["Tea","tea","drink",null,{buddhism:"Chan and Zen monks drank tea to stay alert in long meditation.",taoism:"Tea has long been drunk by hermits and in Chinese temple practice."}]
+];
+const FOODS=RAW.map(([n,ic,c,k,T])=>({n,ic,c,k,T:Object.fromEntries(Object.entries(T).map(([t,s])=>{const [note,refs]=s.split("|");return [t,{note,refs:refs?refs.split("; "):[]}]}))}));
+const MAX=Math.max(...FOODS.map(f=>f.k||0));
+
+const MEALS=[
+ {n:"Esau's Red Lentil Stew",ref:"Genesis 25:34",d:"Thick, warming red lentil stew with onion, garlic and cumin, served with flatbread.",time:"40 min",uses:["Lentils","Onions","Garlic","Cumin","Olive oil","Bread"],ing:["250g red lentils, rinsed","1 large onion, diced","3 garlic cloves, crushed","2 tsp ground cumin","3 tbsp olive oil","1.2 litres water or stock","Salt and a squeeze of lemon"],steps:["Soften the onion in olive oil for 8 minutes.","Add garlic and cumin and cook 1 minute.","Add lentils and water, simmer 25 minutes, stirring now and then.","Season with salt, mash a little and serve with warm bread."]},
+ {n:"Ezekiel Bread",ref:"Ezekiel 4:9",d:"Hearty loaf from wheat, barley, beans, lentils, millet and spelt.",time:"2 hr 30",uses:["Wheat","Barley","Beans","Lentils","Millet","Spelt","Honey","Olive oil"],ing:["250g wholewheat flour","100g spelt flour","50g barley flour","30g millet flour","2 tbsp lentil flour","2 tbsp fava bean flour","7g dried yeast","1 tbsp honey","2 tbsp olive oil","1 tsp salt","About 320ml warm water"],steps:["Mix the flours, yeast and salt.","Add honey, oil and water, knead 10 minutes.","Prove 1 hour until doubled.","Shape into a tin, prove 30 minutes more.","Bake at 190°C for 35–40 minutes."]},
+ {n:"Galilee Grilled Fish",ref:"John 21:9",d:"Whole fish over coals with olive oil, salt and hyssop, served with barley bread.",time:"25 min",uses:["Fish","Olive oil","Salt","Hyssop","Barley"],ing:["2 small whole fish (sea bream or tilapia), cleaned","3 tbsp olive oil","1 tsp sea salt","2 tsp za'atar or dried oregano","Lemon wedges","Barley flatbreads"],steps:["Slash the fish 3 times each side.","Rub with oil, salt and za'atar.","Grill or barbecue 5–6 minutes per side.","Serve with flatbread and lemon."]},
+ {n:"Wilderness Salad",ref:"Numbers 11:5",d:"The foods Israel missed from Egypt: cucumber, melon, leek and onion with mint.",time:"15 min",uses:["Cucumbers","Melons","Leeks","Onions","Mint","Olive oil","Vinegar"],ing:["1 cucumber, diced","¼ watermelon, cubed","1 small leek, finely sliced","½ red onion, finely sliced","Handful of mint","2 tbsp olive oil","1 tbsp wine vinegar","Pinch of salt"],steps:["Soak the onion and leek in cold water for 5 minutes, then drain.","Toss everything together.","Dress with oil, vinegar and salt just before serving."]},
+ {n:"Seven Species Bowl",ref:"Deuteronomy 8:8",d:"Barley and wheat grains with figs, dates, pomegranate, grapes and olive oil.",time:"35 min",uses:["Wheat","Barley","Figs","Dates (palm)","Pomegranates","Grapes","Olive oil","Honey"],ing:["100g pearl barley","100g bulgur wheat","4 dried figs, chopped","4 dates, chopped","Seeds of 1 pomegranate","Handful of red grapes, halved","3 tbsp olive oil","1 tsp honey","Salt and lemon juice"],steps:["Cook barley 30 minutes; soak bulgur in boiling water 15 minutes.","Drain and cool both grains.","Whisk oil, honey, lemon and salt.","Fold in the fruit and dressing."]},
+ {n:"Milk & Honey Breakfast",ref:"Exodus 3:8",d:"Thick yoghurt with honey, almonds, pistachios and figs.",time:"5 min",uses:["Milk","Honey","Almonds","Pistachios","Figs"],ing:["200g thick yoghurt","1 tbsp honey","1 tbsp almonds, chopped","1 tbsp pistachios, chopped","2 fresh or dried figs"],steps:["Spoon yoghurt into a bowl.","Top with sliced figs and nuts.","Drizzle with honey."]},
+ {n:"Abraham's Welcome Plate",ref:"Genesis 18:8",d:"Curd cheese, flatbread, olives, cucumber and herbs for guests.",time:"10 min",uses:["Butter / curds","Cheese","Bread","Olives","Cucumbers","Mint"],ing:["150g labneh or curd cheese","4 flatbreads","Handful of olives","1 cucumber","Mint and dill sprigs","Olive oil and za'atar"],steps:["Spread labneh on a plate, drizzle with oil and za'atar.","Arrange olives, cucumber and herbs around it.","Serve with warm bread."]},
+ {n:"Passover Bitter Herb Salad",ref:"Exodus 12:8",d:"Endive, chicory and romaine with a sharp vinegar dressing.",time:"10 min",uses:["Bitter herbs","Vinegar","Olive oil","Salt"],ing:["1 head endive","1 head chicory","½ romaine lettuce","2 tbsp olive oil","1 tbsp wine vinegar","Salt"],steps:["Tear the leaves.","Whisk the dressing.","Toss and serve straight away."]}
+];
+const TONICS=[
+ {n:"Pomegranate & Honey Tonic",ref:"Song of Solomon 8:2",d:"Bright, tart and sweet. Served chilled.",uses:["Pomegranates","Honey"],ing:["250ml pomegranate juice","1 tsp honey","Squeeze of lemon","Sparkling water to top"],steps:["Stir honey into a little warm water to loosen.","Mix with juice and lemon.","Top with sparkling water and ice."]},
+ {n:"Hyssop & Mint Tea",ref:"Psalm 51:7",d:"A fragrant herbal infusion, good after meals.",uses:["Hyssop","Mint","Honey"],ing:["1 tsp dried hyssop or za'atar herb","5 fresh mint leaves","300ml boiling water","Honey to taste"],steps:["Put herbs in a cup.","Pour on boiling water and steep 5 minutes.","Strain and sweeten with honey."]},
+ {n:"Ruth's Oxymel",ref:"Ruth 2:14",d:"An ancient honey and vinegar drink, diluted to sip.",uses:["Vinegar","Honey"],ing:["2 tbsp wine or apple cider vinegar","1 tbsp honey","250ml cold water"],steps:["Dissolve honey in the vinegar.","Top with cold water and stir.","Sip slowly. Rinse your mouth with water after, as vinegar is acidic."]},
+ {n:"Cumin & Coriander Digestive",ref:"Isaiah 28:25",d:"A warming seed tea, traditional after heavy meals.",uses:["Cumin","Coriander","Honey"],ing:["½ tsp cumin seeds","½ tsp coriander seeds","300ml water","Honey to taste"],steps:["Lightly crush the seeds.","Simmer in water for 5 minutes.","Strain and add honey."]},
+ {n:"Barley Water",ref:"Ruth 2:17",d:"A cooling, old-fashioned drink from pearl barley.",uses:["Barley","Honey"],ing:["50g pearl barley","1 litre water","Zest and juice of 1 lemon","1–2 tbsp honey"],steps:["Rinse barley, simmer in water with lemon zest 20 minutes.","Strain, stir in honey and lemon juice.","Chill and drink within 2 days."]},
+ {n:"Almond & Date Milk",ref:"Genesis 43:11",d:"Creamy, naturally sweet nut milk.",uses:["Almonds","Dates (palm)","Cinnamon"],ing:["100g almonds, soaked overnight","2 dates, stoned","600ml water","Pinch of cinnamon"],steps:["Blend everything for 1 minute.","Strain through a cloth.","Keep chilled up to 3 days."]},
+ {n:"Fig & Cinnamon Warmer",ref:"1 Samuel 25:18",d:"Dried figs steeped in hot milk with cinnamon.",uses:["Figs","Milk","Cinnamon"],ing:["3 dried figs, chopped","250ml milk","1 small cinnamon stick"],steps:["Warm everything gently for 8 minutes.","Leave to steep 5 minutes.","Strain or blend smooth."]}
+];
+const PLANS={
+ every:{t:"Land of Plenty",b:"Built around the seven species of Deuteronomy 8:8 with fish, pulses, herbs and honey. Mostly plant foods, olive oil for fat, sweetness from fruit.",v:["“A land of wheat, and barley, and vines, and fig trees, and pomegranates; a land of oil olive, and honey.”","Deuteronomy 8:8"],
+  days:[
+   [["Milk & Honey Breakfast","Yoghurt, figs, almonds, honey"],["Wilderness Salad","With barley flatbread"],["Esau's Red Lentil Stew","With Ezekiel bread"]],
+   [["Barley porridge","Cooked in milk with dates"],["Abraham's Welcome Plate","Labneh, olives, cucumber, herbs"],["Galilee Grilled Fish","With bitter herb salad"]],
+   [["Ezekiel toast","Olive oil and za'atar"],["Seven Species Bowl","Grains, figs, pomegranate"],["Bean & leek soup","Broad beans, leeks, garlic"]],
+   [["Milk & Honey Breakfast","Swap figs for grapes"],["Lentil & cucumber wrap","Leftover stew, mint"],["Galilee Grilled Fish","With pomegranate and olives"]],
+   [["Fig & almond porridge","Barley flakes, chopped figs"],["Wilderness Salad","Add curd cheese"],["Seven Species Bowl","Warm, with roast onion"]],
+   [["Eggs with herbs","Coriander, cumin, flatbread"],["Abraham's Welcome Plate","Shared lunch"],["Esau's Red Lentil Stew","Double batch for the week"]],
+   [["Fruit plate","Dates, grapes, pomegranate"],["Ezekiel bread & cheese","With olives"],["Feast: fish & bread","Remember John 6, loaves and fishes"]]
+  ]},
+ daniel:{t:"Daniel Fast",b:"Based on Daniel 1:12, pulses (vegetables, seeds and grains) and water only. No meat, dairy, sugar, yeast or wine. Many people follow it for 10 or 21 days.",v:["“Prove thy servants, I beseech thee, ten days; and let them give us pulse to eat, and water to drink.”","Daniel 1:12"],
+  days:[
+   [["Barley porridge","Made with water, topped with dates"],["Wilderness Salad","Cucumber, melon, leek, mint"],["Esau's Red Lentil Stew","No bread, add extra veg"]],
+   [["Fresh fruit","Figs, grapes, pomegranate"],["Bean & leek soup","Broad beans, garlic"],["Seven Species Bowl","Skip the honey"]],
+   [["Almond & date milk","With a handful of almonds"],["Lentil & herb salad","Coriander, mint, olive oil"],["Roast onions & beans","Cumin and olive oil"]],
+   [["Millet porridge","Water, cinnamon, raisins"],["Cucumber & olive plate","With chickpeas"],["Esau's Red Lentil Stew","With bitter herb salad"]],
+   [["Fresh fruit","Melon and grapes"],["Seven Species Bowl","No honey"],["Barley & vegetable pot","Leeks, onions, garlic"]],
+   [["Barley porridge","Pomegranate seeds on top"],["Wilderness Salad","Add beans"],["Lentil & leek soup","Plenty of herbs"]],
+   [["Dates & almonds","With hyssop tea"],["Bitter herb salad","Olive oil and vinegar"],["Bean stew","Millet on the side"]]
+  ]}
+};
+const TIPS={
+"Bread":"Wholegrain and sprouted loaves keep more fibre than refined white bread.",
+"Wheat":"Wholewheat keeps the bran and germ, so it has more fibre and minerals than white flour. It contains gluten.",
+"Barley":"A good source of beta-glucan fibre, which is linked to healthier cholesterol. Pearl barley contains gluten.",
+"Millet":"A gluten-free grain that cooks like rice or porridge.",
+"Spelt":"An ancient wheat, so it contains gluten.",
+"Figs":"Rich in fibre. Dried figs are sweeter and more concentrated, so a small handful goes a long way.",
+"Dates (palm)":"Naturally sweet and high in fibre and potassium. Treat them as a sugar-rich snack and have a few at a time.",
+"Olives":"A source of monounsaturated fats. Brined olives are salty, so go easy if you watch your sodium.",
+"Olive oil":"Mostly monounsaturated fat. Keep extra virgin oil for dressings and gentle cooking.",
+"Pomegranates":"The seeds give fibre and vitamin C. Eat them whole rather than juicing for more fibre.",
+"Grapes":"Eat them whole for fibre. Raisins are dried grapes and more concentrated in sugar.",
+"Almonds":"A source of vitamin E, protein and healthy fats. A small handful is about 20 to 25 nuts.",
+"Lentils":"High in plant protein and fibre, and quick to cook with no soaking.",
+"Beans":"Cook dried beans thoroughly. People with G6PD deficiency should avoid fava (broad) beans.",
+"Chickpeas":"A good source of protein and fibre. Soak dried chickpeas overnight before cooking.",
+"Cucumbers":"About 95% water, so a cooling, hydrating food.",
+"Garlic":"Crush it and rest it for a few minutes before cooking to bring out its flavour.",
+"Onions":"Cooking them slowly brings out their natural sweetness.",
+"Leeks":"Wash well between the layers, where soil collects.",
+"Mint":"Fresh mint makes a simple tea after meals.",
+"Cumin":"Toast the seeds briefly in a dry pan to deepen the flavour.",
+"Coriander":"The leaves and seeds taste quite different, so use the one a recipe asks for.",
+"Cinnamon":"Common cinnamon (cassia) contains coumarin, so keep daily amounts modest.",
+"Salt":"Most adults should keep to about 6 g of salt a day.",
+"Honey":"Sweet and energy-dense, so use sparingly. Never give honey to babies under 12 months.",
+"Milk":"A source of calcium and protein. Soured milk and curds were common in biblical times.",
+"Fish":"Oily fish such as sardines give omega-3 fats. Galilee fish were mostly tilapia and sardines.",
+"Eggs":"A complete protein. Cook until the white is set.",
+"Wine":"If you drink alcohol, stay within national guidelines. Grape juice is the alcohol-free option.",
+"Vinegar":"Dilute it before drinking. It is acidic and can wear tooth enamel.",
+"Water":"The simplest drink on any plan. Most adults need about 6 to 8 glasses a day.",
+"Mustard seed":"Toast or grind it for a sharper, hotter flavour.",
+"Rice":"Cool leftover rice quickly and eat it within a day.",
+"Tea":"Steep for 3 to 5 minutes. Longer makes it bitter."
+};
+let cat="all",trad="all",sort="count",plan="every",day=0;
+let S={lists:[{id:"fav",name:"Favourites",items:[]},{id:"shop",name:"Shopping",items:[]}],active:"fav"};
+try{const s=JSON.parse(localStorage.getItem("bd-lists")||"null");
+  if(s&&s.lists&&s.lists.length)S=s;else{const f=JSON.parse(localStorage.getItem("bd-favs")||"[]");if(f.length)S.lists[0].items=f}}catch(e){}
+const persist=()=>{try{localStorage.setItem("bd-lists",JSON.stringify(S))}catch(e){}};
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const tile=(k,c)=>`<span class="tile ${c||""}">${ico(k)}</span>`;
+const reduce=matchMedia("(prefers-reduced-motion:reduce)").matches;
+const L=id=>S.lists.find(l=>l.id===(id||S.active))||S.lists[0];
+const inList=(n,id)=>L(id).items.includes(n);
+const anyList=n=>S.lists.some(l=>l.items.includes(n));
+const food=n=>FOODS.find(x=>x.n===n);
+const buzz=()=>{try{navigator.vibrate&&navigator.vibrate(12)}catch(e){}};
+
+// ---------- toast ----------
+let tt;
+function hideToast(){$("#toast").classList.remove("on")}
+function toast(msg,act,fn){
+  $("#toastMsg").textContent=msg;const b=$("#toastAct");
+  if(act){b.hidden=false;b.textContent=act;b.onclick=()=>{fn();hideToast()}}else b.hidden=true;
+  $("#toast").classList.add("on");clearTimeout(tt);tt=setTimeout(hideToast,3800);
+}
+
+// ---------- lists ----------
+function totalItems(){return S.lists.reduce((n,l)=>n+l.items.length,0)}
+function updateBadge(){document.querySelectorAll(".badge").forEach(b=>{const n=totalItems();b.textContent=n;b.classList.toggle("on",n>0)})}
+function syncActs(){document.querySelectorAll(".act.r span").forEach(s=>s.textContent="Add to "+L().name)}
+function refreshMarks(){
+  document.querySelectorAll(".fitem").forEach(li=>{li.classList.toggle("has",anyList(li.dataset.n));if(li.classList.contains("open"))fillPanel(li)});
+  updateBadge();if($("#v-lists").classList.contains("on"))renderLists();
+}
+function fly(el,ic){
+  if(reduce||!el)return;
+  const to=[...document.querySelectorAll('[data-v="lists"]')].find(x=>x.offsetParent!==null);if(!to)return;
+  const a=el.getBoundingClientRect(),b=to.getBoundingClientRect();
+  const f=document.createElement("div");f.className="fly";f.innerHTML=ico(ic);f.style.left=a.left+"px";f.style.top=a.top+"px";document.body.appendChild(f);
+  const dx=b.left+b.width/2-a.left-23,dy=b.top+b.height/2-a.top-23;
+  f.animate([{transform:"translate(0,0) scale(1) rotate(0)",opacity:1},{transform:`translate(${dx*.5}px,${dy*.5-70}px) scale(1.1) rotate(120deg)`,opacity:1,offset:.5},{transform:`translate(${dx}px,${dy}px) scale(.25) rotate(300deg)`,opacity:.2}],{duration:750,easing:"cubic-bezier(.5,0,.3,1)"}).onfinish=()=>f.remove();
+}
+function addTo(name,id,el){const l=L(id);if(l.items.includes(name))return;l.items.push(name);persist();buzz();fly(el,food(name).ic);refreshMarks()}
+function removeFrom(name,id){const l=L(id);l.items=l.items.filter(x=>x!==name);persist();refreshMarks()}
+function newList(name){const l={id:"l"+Date.now().toString(36),name,items:[]};S.lists.push(l);S.active=l.id;persist();syncActs();return l}
+function swipeAdd(name,li){
+  const l=L();
+  if(l.items.includes(name)){toast(`${name} is already in ${l.name}`,"Remove",()=>removeFrom(name,l.id));return}
+  addTo(name,l.id,li.querySelector(".food .tile"));
+  toast(`${name} added to ${l.name}`,"Undo",()=>removeFrom(name,l.id));
+  try{localStorage.setItem("bd-hint","1")}catch(e){} const h=$("#hint");if(h)h.remove();
+}
+function chooser(name){
+  const f=food(name);
+  openSheet(`<div class="shead2">${tile(f.ic,"lg")}<div><div class="eyebrow">Add to list</div><h2>${esc(name)}</h2></div></div><div class="pick" id="pick"></div><div class="lform"><input id="nl" placeholder="New list name" maxlength="30" aria-label="New list name"><button class="btn sm" id="nlb">Create</button></div>`);
+  const draw=()=>{$("#pick").innerHTML=S.lists.map(l=>`<button class="pickrow" data-pl="${l.id}" aria-pressed="${l.items.includes(name)}">${ui("lists",20)}${esc(l.name)}<span class="box">${ui("check",16)}</span></button>`).join("")};
+  draw();
+  $("#pick").onclick=e=>{const b=e.target.closest("[data-pl]");if(!b)return;const id=b.dataset.pl;L(id).items.includes(name)?removeFrom(name,id):addTo(name,id,b);draw()};
+  $("#nlb").onclick=()=>{const v=$("#nl").value.trim();if(!v)return;const l=newList(v);addTo(name,l.id,$("#nlb"));$("#nl").value="";draw()};
+}
+
+// ---------- swipe ----------
+const THR=84;let drag=null,lastDrag=0;
+const rubber=dx=>Math.sign(dx)*(Math.abs(dx)<150?Math.abs(dx):150+(Math.abs(dx)-150)*.2);
+document.addEventListener("pointerdown",e=>{
+  const f=e.target.closest("#list .food");if(!f||(e.pointerType==="mouse"&&e.button!==0))return;
+  drag={f,li:f.closest(".fitem"),x:e.clientX,y:e.clientY,dx:0,on:false,id:e.pointerId};
+});
+document.addEventListener("pointermove",e=>{
+  if(!drag||e.pointerId!==drag.id)return;
+  const dx=e.clientX-drag.x,dy=e.clientY-drag.y;
+  if(!drag.on){
+    if(Math.abs(dx)>10&&Math.abs(dx)>Math.abs(dy)*1.4){drag.on=true;try{drag.f.setPointerCapture(e.pointerId)}catch(_){}drag.f.style.transition="none"}
+    else if(Math.abs(dy)>10){drag=null;return}
+    else return;
+  }
+  drag.dx=dx;drag.f.style.transform=`translateX(${rubber(dx)}px)`;
+  const p=Math.min(1,Math.abs(dx)/THR),ready=Math.abs(dx)>=THR;
+  drag.li.classList.toggle("r",dx>0);drag.li.classList.toggle("l",dx<0);drag.li.style.setProperty("--p",p);
+  if(ready!==drag.li.classList.contains("ready")){drag.li.classList.toggle("ready",ready);if(ready)buzz()}
+});
+function endDrag(){
+  if(!drag)return;const d=drag;drag=null;
+  if(!d.on)return;
+  lastDrag=Date.now();
+  d.f.style.transition="transform .5s cubic-bezier(.2,1.3,.4,1)";d.f.style.transform="";
+  const name=d.li.dataset.n;
+  if(d.dx>=THR)swipeAdd(name,d.li);else if(d.dx<=-THR)chooser(name);
+  setTimeout(()=>{d.li.classList.remove("r","l","ready");d.f.style.transition=""},520);
+}
+document.addEventListener("pointerup",endDrag);document.addEventListener("pointercancel",endDrag);
+
+// ---------- ambient motion ----------
+function ambient(){
+  if(reduce)return;
+  setTimeout(()=>{
+    if(!document.hidden&&$("#v-foods").classList.contains("on")&&!$("#sheet").classList.contains("on")&&!$("#splash")){
+      const ts=[...document.querySelectorAll(".fitem .tile")].filter(t=>{const r=t.getBoundingClientRect();return r.top>70&&r.bottom<innerHeight-90});
+      if(ts.length){const t=ts[Math.random()*ts.length|0];t.classList.add("twirl");setTimeout(()=>t.classList.remove("twirl"),1100)}
+      const h=$(".hero");if(h&&Math.random()<.7){const s=document.createElement("i");s.className="star";s.style.left=(8+Math.random()*84)+"%";s.style.top=(8+Math.random()*70)+"%";h.appendChild(s);setTimeout(()=>s.remove(),1500)}
+    }
+    ambient();
+  },3200+Math.random()*4500);
+}
+
+const NAVS=[["foods","Foods"],["lists","Lists"],["plan","Plan"],["meals","Meals"],["tonics","Tonics"]];
+const ORDER=NAVS.map(n=>n[0]);
+const DN=["Mon","Tue","Wed","Thu","Fri","Sat","Sun"];
+
+// ---------- chrome ----------
+document.querySelectorAll(".logoslot").forEach(e=>e.outerHTML=logo(+e.dataset.s));
+$("#menu").innerHTML=ui("menu");$("#close").innerHTML=ui("close");$("#searchIc").innerHTML=ui("search",18);$("#newList").innerHTML=ui("plus",16)+" New list";
+$("#snav").innerHTML=NAVS.map(([v,l])=>`<button role="tab" aria-selected="${v==="foods"}" data-v="${v}">${ui(v)}${l}${v==="lists"?'<span class="badge"></span>':""}</button>`).join("");
+$("#tabsIn").insertAdjacentHTML("beforeend",NAVS.map(([v,l])=>`<button class="tab" role="tab" aria-selected="${v==="foods"}" data-v="${v}">${ui(v)}${l}${v==="lists"?'<span class="badge"></span>':""}</button>`).join(""));
+function renderTrs(){
+  const all=`<li><button class="trbtn" aria-pressed="${trad==="all"}" data-t="all">${tile("fig")}<span><b>All traditions</b><small>Every food</small></span><span class="trn">${FOODS.length}</span></button></li>`;
+  $("#trs").innerHTML=all+TORDER.map(t=>{const n=FOODS.filter(f=>f.T[t]).length;
+    return `<li><button class="trbtn" aria-pressed="${trad===t}" data-t="${t}">${tile(TRAD[t].e)}<span><b>${TRAD[t].n}</b><small>${t==="bible"?"With mention counts":"Foods & customs"}</small></span><span class="trn">${n}</span></button></li>`}).join("");
+}
+function openSide(on){$("#side").classList.toggle("on",on);$("#scrim").classList.toggle("on",on)}
+
+// ---------- foods ----------
+function renderCats(){
+  const opts=[["all","All",null],["saved","In my lists",null],["fruit","Fruit","fig"],["veg","Veg & pulses","lentils"],["grain","Grains & bread","wheat"],["nut","Nuts & seeds","almond"],["herb","Herbs & spices","mint"],["animal","Dairy, meat & honey","honey"],["drink","Drinks & oils","wine"]];
+  $("#cats").innerHTML=opts.map(([k,l,i])=>`<button class="chip" aria-pressed="${cat===k}" data-c="${k}">${i?tile(i):""}${l}</button>`).join("");
+}
+function renderHero(){
+  const dust=`<div class="dust">${Array.from({length:8},(_,i)=>`<i style="left:${6+i*12}%;--t:${7+(i*1.3)%5}s;--dl:${-(i*1.7)}s;--dx:${(i%2?-1:1)*(10+i*4)}px"></i>`).join("")}</div>`;
+  if(trad==="all"){
+    const t=[...FOODS].sort((a,b)=>(b.k||0)-(a.k||0))[0];
+    $("#hero").innerHTML=`<div class="hero">${dust}${tile(t.ic,"lg")}<div class="tx"><div class="eyebrow">Most mentioned in the Bible</div><h2>${t.n}</h2></div><div class="big" id="topCount">0</div><p>${FOODS.length} foods from the Bible and six other traditions. Tap a food to open it.</p></div>`;
+    countUp($("#topCount"),t.k);
+  }else{
+    const T=TRAD[trad],n=FOODS.filter(f=>f.T[trad]).length;
+    $("#hero").innerHTML=`<div class="hero">${dust}${tile(T.e,"lg")}<div class="tx"><div class="eyebrow">Tradition</div><h2>${T.n}</h2></div><div class="big">${n}</div><p>${T.d}</p></div>`;
+  }
+}
+function rowHTML(f,i){
+  const d=Math.min(i,12)*40;
+  const mini=TORDER.filter(t=>f.T[t]).map(t=>`<span class="tile sm" title="${TRAD[t].n}">${ico(TRAD[t].e)}</span>`).join("");
+  return `<li class="fitem ${anyList(f.n)?"has":""}" data-n="${esc(f.n)}" style="animation-delay:${d}ms"><div class="swipe">
+   <div class="act r">${ui("plus",22)}<span>Add to ${esc(L().name)}</span></div>
+   <div class="act l"><span>Choose list</span>${ui("lists",22)}</div>
+   <button class="food" data-f="${esc(f.n)}" aria-expanded="false">${tile(f.ic)}
+    <span style="min-width:0"><span class="fname">${esc(f.n)}<span class="inl">${ui("bookmark",15)}</span></span>
+     <span class="fcat">${CATS[f.c]}${mini?`<span class="mini">${mini}</span>`:""}</span></span>
+    <span class="side">${f.k?`<span class="count">≈${f.k}<small>mentions</small></span>`:`<span class="count" style="color:var(--muted)">0<small>in the Bible</small></span>`}<span class="chev">${ui("chev",18)}</span></span>
+   </button></div><div class="fx"><div class="fxin"></div></div></li>`;
+}
+function renderFoods(){
+  const q=$("#q").value.trim().toLowerCase();
+  let list=FOODS.filter(f=>(trad==="all"||f.T[trad])&&(cat==="all"||(cat==="saved"?anyList(f.n):f.c===cat))&&
+    (!q||f.n.toLowerCase().includes(q)||CATS[f.c].toLowerCase().includes(q)||Object.values(f.T).some(x=>x.note.toLowerCase().includes(q))));
+  list.sort(sort==="count"?(a,b)=>(b.k||0)-(a.k||0)||a.n.localeCompare(b.n):(a,b)=>a.n.localeCompare(b.n));
+  $("#shown").textContent=`${list.length} food${list.length===1?"":"s"}`;
+  $("#list").innerHTML=list.length?list.map(rowHTML).join(""):`<li class="empty">${cat==="saved"?"Nothing in your lists yet. Swipe a food right to add it.":"No foods match that search."}</li>`;
+}
+function countUp(el,to){const t0=performance.now();const step=t=>{const p=Math.min(1,(t-t0)/1100);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step)};
+  if(reduce){el.textContent=to;return}requestAnimationFrame(step)}
+
+// ---------- expanding panel ----------
+function planHits(name){
+  const stem=name.toLowerCase().replace(/\s*\(.*\)|\s*\/.*|\s*&.*|\s.*/,"").replace(/s$/,"");const out=[];
+  Object.values(PLANS).forEach(p=>p.days.forEach((meals,di)=>meals.forEach(([n,s],si)=>{
+    if((n+" "+s).toLowerCase().includes(stem)&&out.length<3)out.push([`${p.t} · ${DN[di]} ${["breakfast","lunch","supper"][si]}`,n])})));
+  return out;
+}
+function panel(f){
+  const ranked=[...FOODS].filter(x=>x.k).sort((a,b)=>b.k-a.k);const rank=f.k?ranked.findIndex(x=>x.n===f.n)+1:0;
+  const trs=TORDER.filter(t=>f.T[t]);const used=[...MEALS,...TONICS].filter(m=>m.uses.includes(f.n));
+  const pair={};used.forEach(m=>m.uses.forEach(u=>{if(u!==f.n)pair[u]=(pair[u]||0)+1}));
+  const pairs=Object.entries(pair).sort((a,b)=>b[1]-a[1]).slice(0,6).map(x=>x[0]);
+  const hits=planHits(f.n),mine=inList(f.n),l=L();
+  return `<div class="stats"><div><b>${f.k?"≈"+f.k:"0"}</b><span>Bible mentions</span></div><div><b>${rank?"#"+rank:"–"}</b><span>Bible rank</span></div><div><b>${trs.length}</b><span>${trs.length===1?"Tradition":"Traditions"}</span></div></div>
+  ${TIPS[f.n]?`<div class="tip">${esc(TIPS[f.n])}<small>General information, not medical advice.</small></div>`:""}
+  <div>${trs.map(t=>{const e=f.T[t];return `<div class="tsec" style="margin-bottom:10px"><div class="th">${tile(TRAD[t].e,"sm")}${TRAD[t].n}</div><p>${esc(e.note)}</p>${e.refs.length?`<div class="tags">${e.refs.map(r=>`<span class="ref">${esc(r)}</span>`).join("")}</div>`:""}</div>`}).join("")}</div>
+  ${used.length?`<div><h4 class="fxh">Cook with it</h4><div class="tags">${used.map(m=>`<button class="chip" data-open="${esc(m.n)}">${esc(m.n)}</button>`).join("")}</div></div>`:""}
+  ${pairs.length?`<div><h4 class="fxh">Pairs well with</h4><div class="tags">${pairs.map(u=>`<button class="chip" data-jump="${esc(u)}">${tile(food(u).ic)}${esc(u)}</button>`).join("")}</div></div>`:""}
+  ${hits.length?`<div><h4 class="fxh">On the diet plans</h4>${hits.map(h=>`<div class="plan-hit"><b>${esc(h[0])}</b> · ${esc(h[1])}</div>`).join("")}</div>`:""}
+  <div class="btns"><button class="btn sm ${mine?"alt":""}" data-add="${esc(f.n)}">${ui(mine?"check":"plus",16)}${mine?"In "+esc(l.name):"Add to "+esc(l.name)}</button><button class="btn sm ghost" data-choose="${esc(f.n)}">${ui("lists",16)}Choose list</button></div>`;
+}
+function fillPanel(li){li.querySelector(".fxin").innerHTML=panel(food(li.dataset.n))}
+function toggleOpen(li){
+  const open=!li.classList.contains("open");
+  document.querySelectorAll(".fitem.open").forEach(o=>{if(o!==li){o.classList.remove("open");o.querySelector(".food").setAttribute("aria-expanded","false")}});
+  if(open)fillPanel(li);
+  li.classList.toggle("open",open);li.querySelector(".food").setAttribute("aria-expanded",open);
+  if(open)setTimeout(()=>li.scrollIntoView({behavior:reduce?"auto":"smooth",block:"nearest"}),420);
+}
+function jump(name){
+  closeSheet();cat="all";trad="all";$("#q").value="";renderTrs();renderCats();renderHero();renderFoods();go("foods");
+  const li=document.querySelector(`.fitem[data-n="${CSS.escape(name)}"]`);if(li){toggleOpen(li);setTimeout(()=>li.scrollIntoView({behavior:"smooth",block:"center"}),60)}
+}
+
+// ---------- sheet + recipes ----------
+function openSheet(html){$("#sheetBody").innerHTML='<div class="grab"></div>'+html;$("#sscrim").classList.add("on");$("#sheet").classList.add("on");$("#sheet").scrollTop=0}
+function closeSheet(){$("#sscrim").classList.remove("on");$("#sheet").classList.remove("on")}
+function recipeSheet(name){
+  const m=[...MEALS,...TONICS].find(x=>x.n===name);
+  openSheet(`<span class="ref">${m.ref}</span><h2>${esc(m.n)}</h2><p style="margin:0">${esc(m.d)}${m.time?` · ${m.time}`:""}</p>
+   <h3>Ingredients</h3><ul>${m.ing.map(i=>`<li>${esc(i)}</li>`).join("")}</ul>
+   <h3>Method</h3><ol>${m.steps.map(s=>`<li>${esc(s)}</li>`).join("")}</ol>
+   <h3>Biblical foods in this</h3><div class="tags">${m.uses.map(u=>{const f=food(u);return `<button class="chip" data-jump="${esc(u)}">${f?tile(f.ic):""}${esc(u)}</button>`}).join("")}</div>`);
+}
+const card=(m,i)=>{const f=food(m.uses[0]);return `<button class="card" data-open="${esc(m.n)}" style="animation-delay:${i*50}ms"><div class="row" style="justify-content:flex-start;gap:12px;flex-wrap:nowrap">${f?tile(f.ic):""}<span class="ref">${m.ref}</span></div><h3>${esc(m.n)}</h3><p>${esc(m.d)}</p>
+ <div class="tags">${m.time?`<span class="tag">${m.time}</span>`:""}<span class="tag">${m.uses.length} biblical foods</span></div></button>`};
+
+// ---------- plan ----------
+function renderPlan(){
+  const p=PLANS[plan];$("#planTitle").textContent=p.t;$("#planBlurb").textContent=p.b;
+  $("#planVerse").innerHTML=`${p.v[0]}<span>${p.v[1]}</span>`;
+  $("#days").innerHTML=DN.map((d,i)=>`<button class="day" aria-pressed="${i===day}" data-d="${i}">${d}<b>${i+1}</b></button>`).join("");
+  const names=new Set(MEALS.map(m=>m.n));
+  $("#meals").innerHTML=p.days[day].map(([n,s],i)=>`<div class="meal" style="animation-delay:${i*70}ms"><span class="slot">${["Breakfast","Lunch","Supper"][i]}</span>
+    <div><h4>${names.has(n)?`<button class="chip" data-open="${esc(n)}" style="font-size:.95rem">${esc(n)} →</button>`:esc(n)}</h4><p>${esc(s)}</p></div></div>`).join("");
+}
+
+// ---------- lists view ----------
+let formMode=null,delArm=0;
+function renderLists(){
+  const l=L();$("#listTitle").textContent=l.name;
+  $("#lchips").innerHTML=S.lists.map(x=>`<button class="lchip" data-ll="${x.id}" aria-pressed="${x.id===S.active}">${esc(x.name)}<i>${x.items.length}</i></button>`).join("");
+  $("#litems").innerHTML=l.items.length?l.items.map((n,i)=>{const f=food(n);return `<div class="litem" style="animation-delay:${i*40}ms">${tile(f.ic)}<span><b>${esc(n)}</b><small>${CATS[f.c]}${f.k?` · ≈${f.k} mentions`:""}</small></span><button class="ibtn sm" data-rm="${esc(n)}" aria-label="Remove ${esc(n)}">${ui("close",16)}</button></div>`}).join("")
+   :`<div class="lempty"><div>This list is empty.<br>Swipe a food to the right on the Foods tab to add it here.</div><button class="btn sm" data-v="foods">Browse foods</button></div>`;
+  $("#lbtns").innerHTML=(l.items.length?`<button class="btn sm" data-copy>${ui("copy",16)}Copy list</button>`:"")+`<button class="btn sm ghost" data-rename>${ui("edit",16)}Rename</button>`+(S.lists.length>1?`<button class="btn sm ghost" data-del>${ui("trash",16)}Delete list</button>`:"");
+  $("#lshare").innerHTML="";
+}
+function showForm(mode){
+  formMode=mode;const f=$("#lform");f.hidden=false;f.className="lform";
+  f.innerHTML=`<input id="lname" maxlength="30" value="${mode==="rename"?esc(L().name):""}" placeholder="List name" aria-label="List name"><button class="btn sm" id="lsave">${mode==="rename"?"Save":"Create"}</button>`;
+  $("#lname").focus();$("#lsave").onclick=submitForm;$("#lname").onkeydown=e=>{if(e.key==="Enter")submitForm()};
+}
+function submitForm(){
+  const v=$("#lname").value.trim();if(!v)return;
+  if(formMode==="rename")L().name=v;else newList(v);
+  persist();$("#lform").hidden=true;syncActs();renderLists();
+}
+function copyList(){
+  const l=L();const text=l.name+"\n"+l.items.map(n=>{const f=food(n);return "• "+n+(f.k?` (≈${f.k} mentions in the Bible)`:"")}).join("\n");
+  const fallback=()=>{$("#lshare").innerHTML=`<textarea class="share" id="shareTa" readonly>${esc(text)}</textarea>`;const t=$("#shareTa");t.focus();t.select();toast("Select and copy the text below")};
+  try{navigator.clipboard.writeText(text).then(()=>toast("List copied"),fallback)}catch(e){fallback()}
+}
+
+// ---------- navigation ----------
+function go(v){
+  document.querySelectorAll("[data-v]").forEach(t=>t.setAttribute("aria-selected",t.dataset.v===v));
+  document.querySelectorAll(".view").forEach(s=>s.classList.toggle("on",s.id==="v-"+v));
+  $("#pill").style.transform=`translateX(${ORDER.indexOf(v)*100}%)`;
+  window.scrollTo({top:0});if(v==="lists")renderLists();
+  try{localStorage.setItem("bd-tab",v)}catch(e){}
+}
+document.addEventListener("click",e=>{
+  const t=e.target.closest("[data-v],[data-c],[data-f],[data-open],[data-jump],[data-d],[data-t],[data-add],[data-choose],[data-ll],[data-rm],[data-copy],[data-rename],[data-del]");
+  if(!t)return;
+  const D=t.dataset;
+  if(D.v!==undefined){go(D.v);openSide(false)}
+  else if(D.c){cat=D.c;renderCats();renderFoods()}
+  else if(D.f!==undefined){if(Date.now()-lastDrag<350)return;toggleOpen(t.closest(".fitem"))}
+  else if(D.open)recipeSheet(D.open);
+  else if(D.jump)jump(D.jump);
+  else if(D.d){day=+D.d;renderPlan()}
+  else if(D.t){trad=D.t;sort=trad==="all"||trad==="bible"?"count":"az";syncSort();renderTrs();renderHero();renderFoods();go("foods");openSide(false)}
+  else if(D.add){const l=L();if(inList(D.add)){removeFrom(D.add);toast(`Removed from ${l.name}`)}else{addTo(D.add,null,t);toast(`${D.add} added to ${l.name}`,"Undo",()=>removeFrom(D.add,l.id))}}
+  else if(D.choose)chooser(D.choose);
+  else if(D.ll){S.active=D.ll;persist();syncActs();renderLists()}
+  else if(D.rm){removeFrom(D.rm)}
+  else if(D.copy!==undefined)copyList();
+  else if(D.rename!==undefined)showForm("rename");
+  else if(D.del!==undefined){
+    if(Date.now()-delArm<3000){const id=L().id;S.lists=S.lists.filter(x=>x.id!==id);S.active=S.lists[0].id;persist();syncActs();refreshMarks();renderLists();toast("List deleted")}
+    else{delArm=Date.now();t.lastChild.textContent="Tap again to delete";setTimeout(()=>{if($("#v-lists").classList.contains("on"))renderLists()},3000)}
+  }
+});
+function syncSort(){$("#sCount").setAttribute("aria-pressed",sort==="count");$("#sAz").setAttribute("aria-pressed",sort==="az")}
+$("#menu").onclick=()=>openSide(true);$("#scrim").onclick=()=>openSide(false);
+$("#newList").onclick=()=>showForm("new");
+$("#q").addEventListener("input",renderFoods);
+$("#sCount").onclick=()=>{sort="count";syncSort();renderFoods()};
+$("#sAz").onclick=()=>{sort="az";syncSort();renderFoods()};
+$("#pEvery").onclick=()=>{plan="every";$("#pEvery").setAttribute("aria-pressed",true);$("#pDaniel").setAttribute("aria-pressed",false);renderPlan()};
+$("#pDaniel").onclick=()=>{plan="daniel";$("#pDaniel").setAttribute("aria-pressed",true);$("#pEvery").setAttribute("aria-pressed",false);renderPlan()};
+$("#sscrim").onclick=closeSheet;$("#close").onclick=closeSheet;
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeSheet();openSide(false)}});
+
+// ---------- init ----------
+$("#subline").textContent=`${FOODS.length} foods · ${TORDER.length} traditions`;
+day=(new Date().getDay()+6)%7;
+let seen=false;try{seen=!!localStorage.getItem("bd-hint")}catch(e){}
+if(!seen)$("#shown").closest(".row").insertAdjacentHTML("beforebegin",`<div class="hint" id="hint">${ui("chev",20).replace("<svg","<svg style=\"transform:rotate(-90deg)\"")}<span>Swipe a food <b>right</b> to add it to your list, or <b>left</b> to choose a list.</span></div>`);
+renderTrs();renderCats();renderHero();renderFoods();renderPlan();updateBadge();
+$("#mealCards").innerHTML=MEALS.map(card).join("");
+$("#tonicCards").innerHTML=TONICS.map(card).join("");
+let start="foods";try{start=localStorage.getItem("bd-tab")||"foods"}catch(e){}
+go(ORDER.includes(start)?start:"foods");
+ambient();
+
+// ---------- splash ----------
+(function(){
+  const s=$("#splash");if(!s)return;
+  $("#wheatSlot").innerHTML='<svg viewBox="0 0 64 64" width="100%" height="100%">'+WHEAT+'</svg>';
+  $("#grains").innerHTML=Array.from({length:14},(_,i)=>`<i class="g" style="--a:${i*360/14}deg;--d:${(i%7)*.05}s"></i>`).join("");
+  const end=()=>{s.classList.add("out");setTimeout(()=>{s.remove();
+    const f=!seen&&!reduce&&document.querySelector("#list .food");
+    if(f)f.animate([{transform:"translateX(0)"},{transform:"translateX(46px)"},{transform:"translateX(0)"}],{duration:1100,delay:500,easing:"ease-in-out"})},450)};
+  s.addEventListener("click",end);setTimeout(end,3000);
+})();
+</script>
+
+<script>if("serviceWorker"in navigator&&location.protocol.indexOf("http")===0){navigator.serviceWorker.register("sw.js").catch(function(){})}</script>
+</body>
+</html>
